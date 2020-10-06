@@ -10,4 +10,5 @@ public class Padron {
     public Beneficio beneficio;
     
     // Metodo para cargar beneficiarios por archivo
+    // xd
 }
