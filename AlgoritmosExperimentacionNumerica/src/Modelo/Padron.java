@@ -3,12 +3,15 @@
  */
 package Modelo;
 
+import Utils.CargarArchivos;
 import java.util.List;
 
 public class Padron {
     public List<Beneficiario> beneficiarios;
-    public Beneficio beneficio;
+    public String descripcion;
     
-    // Metodo para cargar beneficiarios por archivo
-    // xd
+    public Padron(String descripcion, String archivoPadron) {
+        this.descripcion = descripcion;
+        this.beneficiarios = CargarArchivos.CargarPadron(archivoPadron);
+    }
 }

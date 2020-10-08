@@ -4,19 +4,17 @@
 package Algoritmo;
 
 import Modelo.Beneficiario;
+import Modelo.Beneficio;
 import Modelo.Calendario;
-import Modelo.Distribuidora;
-import Modelo.Padron;
 import java.util.Map;
 
 public class Solucion {
-    private final Padron padron;
-    private final Distribuidora agente;
+    private final Beneficio bono;
     private Map<Beneficiario, Individuo> padron_algoritmo;
     
-    public Solucion(Padron P, Distribuidora D){
-        this.padron = P;
-        this.agente = D;
+    public Solucion(Beneficio bono){
+        this.bono = bono;
+        // Crear individuos en base a los beneficiarios del padron
     }
     
     public Calendario Distribuir_Citas(){

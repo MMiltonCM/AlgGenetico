@@ -5,21 +5,26 @@
  */
 package Algoritmo;
 
-import Modelo.Padron;
-import java.util.List;
+import Modelo.Beneficio;
+import Modelo.Calendario;
 
 /**
  *
  * @author usuario
  */
 public class AlgoritmoGenetico {
-    private List<Padron> padrones;
+    public int tiempoEjecucion;
+    public double score;
+    public Solucion solucion;
     
-    public AlgoritmoGenetico(List<Padron> padrones){
-        
+    public AlgoritmoGenetico(Beneficio bono) {
+        this.solucion = new Solucion(bono);
     }
     
-    public void ejecutar(){
-        
+    public Calendario ejecutar(){
+        // Iniciar contador de tiempo
+        Calendario cal = solucion.Distribuir_Citas();
+        // Obtener el score de la FO
+        return cal;
     }
 }

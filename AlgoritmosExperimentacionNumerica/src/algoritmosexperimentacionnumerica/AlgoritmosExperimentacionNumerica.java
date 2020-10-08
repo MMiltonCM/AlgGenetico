@@ -6,9 +6,12 @@
 package algoritmosexperimentacionnumerica;
 
 import Algoritmo.AlgoritmoGenetico;
+import Modelo.Beneficio;
+import Modelo.Calendario;
+import Modelo.Distribuidora;
 import Modelo.Padron;
-import java.util.ArrayList;
-import java.util.List;
+import Utils.Printer;
+import java.time.LocalDate;
 
 /**
  *
@@ -16,21 +19,25 @@ import java.util.List;
  */
 public class AlgoritmosExperimentacionNumerica {
 
-    /**
-     * @param args the command line arguments
-     */
-    
-    public static List<Padron> cargarListaPadrones(){
-        return new ArrayList<Padron>();
-    }
-    
     public static void main(String[] args) {
-        List<Padron> padrones = cargarListaPadrones();
+        // Primero crearemos la empresa que distribuye el beneficio
+        Distribuidora banco = new Distribuidora("Banco Exp", "agentes.txt");
         
-        AlgoritmoGenetico AG = new AlgoritmoGenetico(padrones);
-        AG.ejecutar();
+        // Ahora registramos un padron donde estaran los beneficiarios
+        Padron personas = new Padron("Familias afectas economicamente", "padron.txt");
         
-        // TODO code application logic here
+        // Con la informacion construimos el beneficio creara los bloques de horarios posibles
+        Beneficio bono = new Beneficio("Bono Experimentacion", banco, personas, LocalDate.of(2020,9,10));
+        
+        // Despues le brindamos esta informacion a nuestros algoritmos para que nos devuelvan un Calendario de citas
+        AlgoritmoGenetico AG = new AlgoritmoGenetico(bono);
+        Calendario calGenetico = AG.ejecutar();
+        
+        // Algoritmo 2
+        
+        // Imprimir metricas de algoritmo
+        Printer.ReporteEstadisticas(AG, calGenetico);
+        
     }
     
 }
