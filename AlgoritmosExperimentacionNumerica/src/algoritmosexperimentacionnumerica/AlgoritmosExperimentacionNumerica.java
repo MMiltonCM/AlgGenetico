@@ -9,12 +9,18 @@ import Algoritmo.AlgoritmoGenetico;
 import Modelo.Beneficio;
 import Modelo.Calendario;
 import Modelo.Distribuidora;
+import Modelo.LocalAtencion;
 import Modelo.Padron;
+import PSO.ParticulaPSO;
 import Utils.Hora;
 import Utils.Printer;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -23,6 +29,16 @@ import java.time.LocalTime;
 public class AlgoritmosExperimentacionNumerica {
 
     public static void main(String[] args) {
+        /* NO BORRAR : EXPERIMENTO
+        ParticulaPSO xd = new ParticulaPSO(null);
+        Distribuidora dist = new Distribuidora("", "");
+        List<LocalAtencion> L = new ArrayList<>();
+        L.add( new LocalAtencion(1, 1, 1, null, 1, LocalTime.of(8, 0), LocalTime.of(19, 0)) );
+        L.add( new LocalAtencion(2, 1, 1, null, 1, LocalTime.of(8, 0), LocalTime.of(19, 0)) );
+        dist.setAgencias(L);
+        xd.crearMatriz(LocalDate.of(2020,10,12), 7, dist);
+        */
+        
         // Primero crearemos la empresa que distribuye el beneficio
         Distribuidora banco = new Distribuidora("Banco Exp", "agentes.txt");
         

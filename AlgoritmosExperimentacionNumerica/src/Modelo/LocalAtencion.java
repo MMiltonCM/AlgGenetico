@@ -8,6 +8,8 @@ import Utils.Hora;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LocalAtencion {
     
@@ -19,6 +21,7 @@ public class LocalAtencion {
     public LocalTime horaInicioAtencion;
     public LocalTime horaFinAtencion;
     public Integer numeroBloques; //No es atributo de BD
+    public List<LocalTime> bloques; //No es atributo de BD
     
     public LocalAtencion(Integer idLocalAtencion, double latitud, double longitud, String ubigeo, Integer capacidad, LocalTime horaInicioAtencion, LocalTime horaFinAtencion) {
         this.idLocalAtencion = idLocalAtencion;
@@ -31,6 +34,10 @@ public class LocalAtencion {
         
         this.numeroBloques = Hora.discretizar(horaInicioAtencion,
                 horaFinAtencion,Constantes.tiempoAtencion);
+        this.bloques = new ArrayList<>();
+        for(Integer i = 0; i<numeroBloques; i++)
+            bloques.add( horaInicioAtencion.plus(
+                    Constantes.tiempoAtencion.multipliedBy((long)i)) );
     }
     
     public Integer getIdLocalAtencion() {
@@ -87,6 +94,22 @@ public class LocalAtencion {
 
     public void setHoraFinAtencion(LocalTime horaFinAtencion) {
         this.horaFinAtencion = horaFinAtencion;
+    }
+
+    public Integer getNumeroBloques() {
+        return numeroBloques;
+    }
+
+    public void setNumeroBloques(Integer numeroBloques) {
+        this.numeroBloques = numeroBloques;
+    }
+
+    public List<LocalTime> getBloques() {
+        return bloques;
+    }
+
+    public void setBloques(List<LocalTime> bloques) {
+        this.bloques = bloques;
     }
     
 }
