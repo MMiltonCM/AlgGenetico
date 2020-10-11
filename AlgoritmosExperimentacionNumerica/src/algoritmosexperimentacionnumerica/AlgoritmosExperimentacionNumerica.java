@@ -23,10 +23,6 @@ import java.time.LocalTime;
 public class AlgoritmosExperimentacionNumerica {
 
     public static void main(String[] args) {
-        Integer x = Hora.discretizar(LocalTime.of(15, 30), 
-                LocalTime.of(14, 0), Duration.ofMinutes(30));
-        
-        
         // Primero crearemos la empresa que distribuye el beneficio
         Distribuidora banco = new Distribuidora("Banco Exp", "agentes.txt");
         
