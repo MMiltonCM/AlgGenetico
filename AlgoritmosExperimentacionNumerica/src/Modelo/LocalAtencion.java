@@ -7,4 +7,6 @@ public class LocalAtencion {
     public double latitud;
     public double longitud;
     public String ubigeo;
+    
+    // Demas parametros: Capacidad, Horario atencion
 }

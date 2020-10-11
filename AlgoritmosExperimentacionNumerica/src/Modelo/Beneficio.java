@@ -24,6 +24,10 @@ public class Beneficio {
     
     private static List<BloqueHorario> CrearHorarios(Distribuidora dist, Padron pad){
         List<BloqueHorario> l = new ArrayList<>();
+        // FOR 1 TO DOS SEMANAS
+        //    A PARTIR DE LA FECHA INICIO
+        //    PARA CADA LOCAL (HORARIO ATENCION) HACERLE BLOQUES HORARIO QUE PUEDA ATENDER
+        
         return l;
     }
 }

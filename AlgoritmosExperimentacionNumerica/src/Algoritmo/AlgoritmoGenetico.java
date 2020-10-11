@@ -13,8 +13,8 @@ import Modelo.Calendario;
  * @author usuario
  */
 public class AlgoritmoGenetico {
-    public int tiempoEjecucion;
-    public double score;
+    public int tiempoEjecucion; // EN SEGUNDOS 
+    public double score; // DEFINIRSE UNA METRICA STANDARD
     public Solucion solucion;
     
     public AlgoritmoGenetico(Beneficio bono) {

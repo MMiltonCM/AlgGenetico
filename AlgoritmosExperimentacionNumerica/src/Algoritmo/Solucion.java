@@ -20,7 +20,7 @@ public class Solucion {
     public Calendario Distribuir_Citas(){
         Calendario cal = new Calendario();
         
-        // Crear los bloques de atencion de las agencias de la Distribuidora
+        // Crear citas de los bloquehorario de la Distribuidora 
         
         // Crear una poblacion con los beneficiario del padron. Asignar cita aleatoria
         
@@ -38,3 +38,8 @@ public class Solucion {
     }
     
 }
+
+// INDIVIDIO JUAN + INDIVIDUO PEPE
+// 1 INDIVIDIO JUAN + 1 INDIVIDUO PEPE 
+// COMPARAR JUAN ANTIGUO CON JUAN NUEVO
+// ESCOGIAS AL MEJOR JUAN

@@ -36,8 +36,10 @@ public class AlgoritmosExperimentacionNumerica {
         // Algoritmo 2
         
         // Imprimir metricas de algoritmo
-        Printer.ReporteEstadisticas(AG, calGenetico);
+        Printer.ReporteEstadisticas(AG, calGenetico); 
         
+        // METRICAS: CUANDO ES LA ULTIMA CITA ASIGNADA
+        // LA SUMA TOTAL DE TIEMPOS DESDE EL INICIO HASTA LA CITA
     }
     
 }
