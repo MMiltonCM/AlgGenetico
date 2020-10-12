@@ -16,4 +16,16 @@ public class Hora {
         Duration dif = Duration.between(H1, H2);
         return (int)(dif.getSeconds()/bloque.getSeconds());
     }
+    
+    public static Integer hashVisual(LocalDateTime H){
+        /*
+        Integer hash = 0;
+        hash += 100000000*H.getYear();
+        hash += 1000000*H.getMonthValue();
+        hash += 10000*H.getDayOfMonth();
+        hash += 100*H.getHour();
+        hash += H.getMinute();*/
+        Integer hash = H.hashCode();
+        return hash;
+    }
 }

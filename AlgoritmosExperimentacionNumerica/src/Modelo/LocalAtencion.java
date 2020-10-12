@@ -23,7 +23,9 @@ public class LocalAtencion {
     public Integer numeroBloques; //No es atributo de BD
     public List<LocalTime> bloques; //No es atributo de BD
     
-    public LocalAtencion(Integer idLocalAtencion, double latitud, double longitud, String ubigeo, Integer capacidad, LocalTime horaInicioAtencion, LocalTime horaFinAtencion) {
+    public LocalAtencion(Integer idLocalAtencion, double latitud, 
+            double longitud, String ubigeo, Integer capacidad, 
+            LocalTime horaInicioAtencion, LocalTime horaFinAtencion) {
         this.idLocalAtencion = idLocalAtencion;
         this.latitud = latitud;
         this.longitud = longitud;

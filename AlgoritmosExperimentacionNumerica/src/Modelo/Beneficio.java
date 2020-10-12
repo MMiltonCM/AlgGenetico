@@ -30,4 +30,44 @@ public class Beneficio {
         
         return l;
     }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Distribuidora getDist() {
+        return dist;
+    }
+
+    public void setDist(Distribuidora dist) {
+        this.dist = dist;
+    }
+
+    public Padron getPad() {
+        return pad;
+    }
+
+    public void setPad(Padron pad) {
+        this.pad = pad;
+    }
+
+    public LocalDate getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(LocalDate inicio) {
+        this.inicio = inicio;
+    }
+
+    public List<BloqueHorario> getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(List<BloqueHorario> horarios) {
+        this.horarios = horarios;
+    }
 }

@@ -10,8 +10,29 @@ public class Padron {
     public List<Beneficiario> beneficiarios;
     public String descripcion;
     
+    public Padron(String descripcion, List<Beneficiario> beneficiarios){
+        this.beneficiarios = beneficiarios;
+        this.descripcion = descripcion;
+    }
+    
     public Padron(String descripcion, String archivoPadron) {
         this.descripcion = descripcion;
         this.beneficiarios = CargarArchivos.CargarPadron(archivoPadron);
+    }
+
+    public List<Beneficiario> getBeneficiarios() {
+        return beneficiarios;
+    }
+
+    public void setBeneficiarios(List<Beneficiario> beneficiarios) {
+        this.beneficiarios = beneficiarios;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }
