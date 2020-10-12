@@ -35,7 +35,7 @@ public class AlgoritmoPSO {
         
     }
     
-    public Calendario ejecutar(){
+    public void ejecutar(){
         // Iniciar contador de tiempo
         //Calendario cal = solucion.Distribuir_Citas();
         // Obtener el score de la FO
@@ -50,6 +50,6 @@ public class AlgoritmoPSO {
         }
         
         
-        return null;
+        
     }
 }
