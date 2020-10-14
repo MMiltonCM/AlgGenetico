@@ -11,6 +11,15 @@ public class Beneficiario {
     public Ubigeo ubigeo;
     
     public Beneficiario(){}
+
+    public Beneficiario(Integer idBeneficiario, String DNI, boolean flagDiscapacidad, 
+            boolean flagAdultoMayor, Ubigeo ubigeo) {
+        this.idBeneficiario = idBeneficiario;
+        this.DNI = DNI;
+        this.flagDiscapacidad = flagDiscapacidad;
+        this.flagAdultoMayor = flagAdultoMayor;
+        this.ubigeo = ubigeo;
+    }
     
     public Beneficiario(Integer id){
         idBeneficiario = id;

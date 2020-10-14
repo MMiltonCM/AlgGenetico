@@ -21,14 +21,14 @@ public class CargarArchivos {
         List<List<String>> Data = Leer(archivoAgencias);
         List<LocalAtencion> locales = new ArrayList<>();
         for(List<String> linea : Data){
-            Ubigeo u = p.buscarUbigeo(linea.get(1)+linea.get(2)+linea.get(3));
+            Ubigeo u = p.buscarUbigeo(linea.get(2)+linea.get(3)+linea.get(4));
             String[] h_aux = linea.get(6).split(":");
             LocalTime inicio = LocalTime.of(Integer.parseInt(h_aux[0]),
                     Integer.parseInt(h_aux[1].substring(0, 2)));
             LocalTime fin = LocalTime.of(Integer.parseInt(h_aux[1].substring(h_aux[1].length() - 2, h_aux[1].length())),
                     Integer.parseInt(h_aux[2].substring(0, 2)));
-            LocalAtencion la = new LocalAtencion(Integer.parseInt(linea.get(0)), u.latitud/360, 
-                u.longitud/360 , u.codigo, Constantes.capacidad, inicio, fin);
+            LocalAtencion la = new LocalAtencion(Integer.parseInt(linea.get(0)), Double.valueOf(u.latitud)/360, 
+                Double.valueOf(u.longitud)/360 , u.codigo, Constantes.capacidad, inicio, fin);
             locales.add(la);
         }
         return locales;
@@ -37,17 +37,13 @@ public class CargarArchivos {
     public static List<Beneficiario> CargarPadron(String archivoPadron,Pais p) {
         List<List<String>> Data = Leer(archivoPadron);
         List<Beneficiario> padron = new ArrayList<>();
+        int num = 0;
         for(List<String> linea : Data){
             Ubigeo u = p.buscarUbigeo(linea.get(1)+linea.get(2)+linea.get(3));
-            /*String[] h_aux = linea.get(6).split(":");
-            LocalTime inicio = LocalTime.of(Integer.parseInt(h_aux[0]),
-                    Integer.parseInt(h_aux[1].substring(0, 2)));
-            LocalTime fin = LocalTime.of(Integer.parseInt(h_aux[1].substring(h_aux[1].length() - 2, h_aux[1].length())),
-                    Integer.parseInt(h_aux[2].substring(0, 2)));
-            LocalAtencion la = new LocalAtencion(Integer.parseInt(linea.get(0)), u.latitud/360, 
-                u.longitud/360 , u.codigo, Constantes.capacidad, inicio, fin);
-            locales.add(la);*/
-            
+            Beneficiario b = new Beneficiario(num, String.valueOf(num), 
+                    "1".equals(linea.get(6)), "1".equals(linea.get(7)), u);
+            padron.add(b);
+            num++;
         }
         return padron;
     }

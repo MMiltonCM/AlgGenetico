@@ -38,6 +38,7 @@ public class AlgoritmosExperimentacionNumerica {
         CargarArchivos.CargarUbigeos("ubigeos.txt", peru);
 
         // NO BORRAR : EXPERIMENTO 
+        /*
         Distribuidora dist = new Distribuidora("", "", peru);
         List<LocalAtencion> L = new ArrayList<>();
         for(Integer i = 0; i<3; i++) //En la data son 551, pero aqui cambio a gusto
@@ -50,10 +51,10 @@ public class AlgoritmosExperimentacionNumerica {
         Padron P = new Padron("Padron Meramente Experimental", LB);
         Beneficio bonoExp = new Beneficio("Bono Experimentacion", dist, P, fechaInicio);
         AlgoritmoPSO alg = new AlgoritmoPSO(bonoExp, fechaInicio,1); //tercer argumento son dias
-        alg.ejecutar();
+        alg.ejecutar(); */
         
         // Primero crearemos la empresa que distribuye el beneficio
-        Distribuidora banco = new Distribuidora("Banco Exp", "agentes.txt",peru);
+        Distribuidora banco = new Distribuidora("Banco Exp", "agencias.txt",peru);
         
         // Ahora registramos un padron donde estaran los beneficiarios
         Padron personas = new Padron("Familias afectas economicamente", "padron_prueba.txt",peru);

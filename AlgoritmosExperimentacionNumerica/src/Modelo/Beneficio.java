@@ -3,7 +3,10 @@
  */
 package Modelo;
 
+import Utils.Constantes;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,13 +25,26 @@ public class Beneficio {
         this.horarios = CrearHorarios(dist, pad);
     }
     
-    private static List<BloqueHorario> CrearHorarios(Distribuidora dist, Padron pad){
-        List<BloqueHorario> l = new ArrayList<>();
-        // FOR 1 TO DOS SEMANAS
-        //    A PARTIR DE LA FECHA INICIO
-        //    PARA CADA LOCAL (HORARIO ATENCION) HACERLE BLOQUES HORARIO QUE PUEDA ATENDER
+    private List<BloqueHorario> CrearHorarios(Distribuidora dist, Padron pad){
+        List<BloqueHorario> h = new ArrayList<>();
+        int cant_bloques = (int)(pad.beneficiarios.size()/dist.getAgencias().size());
+        for(LocalAtencion la : dist.getAgencias()){
+            int bloques_dia = la.getNumeroBloques();
+            for (int j=0; j <= (int)(cant_bloques/bloques_dia); j++){
+                for(int k=0; k < bloques_dia; k++){
+                    LocalTime start = la.horaInicioAtencion.plus(
+                            Constantes.tiempoAtencion.multipliedBy(k));
+                    LocalTime end = la.horaInicioAtencion.plus(
+                            Constantes.tiempoAtencion.multipliedBy(k+1));
+                    BloqueHorario bh = new BloqueHorario(la, 
+                        LocalDateTime.of(inicio.plusDays(j), start),
+                        LocalDateTime.of(inicio.plusDays(j), end));
+                    h.add(bh);
+                }
+            }
+        }
         
-        return l;
+        return h;
     }
 
     public String getDescripcion() {
