@@ -53,6 +53,9 @@ public class AlgoritmosExperimentacionNumerica {
         AlgoritmoPSO alg = new AlgoritmoPSO(bonoExp, fechaInicio,1); //tercer argumento son dias
         alg.ejecutar(); */
         
+        
+        
+        
         // Primero crearemos la empresa que distribuye el beneficio
         Distribuidora banco = new Distribuidora("Banco Exp", "agencias.txt",peru);
         
@@ -61,6 +64,12 @@ public class AlgoritmosExperimentacionNumerica {
         
         // Con la informacion construimos el beneficio creara los bloques de horarios posibles
         Beneficio bono = new Beneficio("Bono Experimentacion", banco, personas, LocalDate.of(2020,9,10));
+        
+        
+        /*
+        AlgoritmoPSO algPSO = new AlgoritmoPSO(bono, LocalDate.of(2020,9,10),5);
+        algPSO.ejecutar();
+        */
         
         // Despues le brindamos esta informacion a nuestros algoritmos para que nos devuelvan un Calendario de citas
         AlgoritmoGenetico AG = new AlgoritmoGenetico(bono);
@@ -73,6 +82,10 @@ public class AlgoritmosExperimentacionNumerica {
         
         // METRICAS: CUANDO ES LA ULTIMA CITA ASIGNADA
         // LA SUMA TOTAL DE TIEMPOS DESDE EL INICIO HASTA LA CITA
+        
+        
+        
+        
     }
     
 }

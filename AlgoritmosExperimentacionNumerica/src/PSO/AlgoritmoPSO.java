@@ -51,13 +51,16 @@ public class AlgoritmoPSO {
         
         List<ParticulaPSO> LPSO = new ArrayList<>();
         
-        for(Integer i = 0; i < 30 ; i++){
-            ParticulaPSO ppso = new ParticulaPSO(beneficiarios, locales, this, 
+        for(Integer i = 0; i < 100 ; i++){
+            ParticulaPSO ppso1 = new ParticulaPSO(beneficiarios, locales, this, 
                     fechaInicio, dias);
-            ppso.inicializarAleatoriamente();
-            ppso.transicion();
-            LPSO.add(ppso);
-            System.out.print("Se ha creado la particula " + i.toString() + "\n");
+            ppso1.inicializarAleatoriamente();
+            ParticulaPSO ppso2 = ppso1.transicion();
+            Integer j = i;
+            LPSO.add(ppso1);
+            System.out.print("Se ha creado la particula " + ((Integer)(2*i)).toString() + "\n");
+            LPSO.add(ppso2);
+            System.out.print("Se ha creado la particula " + ((Integer)(2*i+1)).toString() + "\n");
         }
         
         

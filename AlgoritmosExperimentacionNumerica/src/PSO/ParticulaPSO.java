@@ -43,6 +43,12 @@ public class ParticulaPSO {
         asignaciones = new LinkedHashMap<Integer, List<Integer>>();
     }
     
+    public LocalDateTime getRandomBloque(){
+        List<LocalDateTime> LLDT = new ArrayList<>(inicios.values());
+        Integer random = (new Random()).nextInt(LLDT.size());
+        return LLDT.get(random);
+    }
+    
     public ParticulaPSO(List<Beneficiario> beneficiarios, List<LocalAtencion> localesAtencion,
             AlgoritmoPSO algoritmo, 
             LocalDate diaInicio, Integer numDias){
@@ -149,21 +155,21 @@ public class ParticulaPSO {
                 algoritmo, diaInicio, dias);
         vecino.inicializarAleatoriamente();
         Random r = new Random();
-        
-        for( Integer idbenef : vecino.asignaciones.keySet()){
+        List<Integer> beneficiariosV = new ArrayList<>(vecino.asignaciones.keySet());
+        for( Integer idbenef : beneficiariosV){
             
             Integer localActual = vecino.asignaciones.get(idbenef).get(0);
             Integer bloqueActual = vecino.asignaciones.get(idbenef).get(1);
             
             LocalAtencion localAlea = algoritmo.getRandomLocalAtencion();
-            LocalDateTime datetAlea = algoritmo.getRandomBloque();
+            LocalDateTime datetAlea = vecino.getRandomBloque();
             Integer local = localAlea.getIdLocalAtencion();
             Integer block = Hora.hashVisual(datetAlea);
             
             List<Integer> asignadosActual = vecino.matriz.get(localActual).get(bloqueActual);
             List<Integer> asignadosDestino = vecino.matriz.get(local).get(block);
             if (asignadosDestino.size()<Constantes.capacidad){
-                asignadosActual.remove(r);
+                asignadosActual.remove(idbenef);
                 vecino.asignaciones.remove(idbenef);
                 asignadosDestino.add(idbenef);
                 List<Integer> asig = new ArrayList<>();
@@ -173,7 +179,7 @@ public class ParticulaPSO {
             }
         }
         
-        return null;
+        return vecino;
     }
     
     public void fitness(){
