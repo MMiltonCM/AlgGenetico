@@ -5,10 +5,12 @@ import Modelo.Beneficiario;
 import Modelo.Beneficio;
 import Modelo.Calendario;
 import Modelo.LocalAtencion;
+import Utils.Hora;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class AlgoritmoPSO {
     public int tiempoEjecucion;
@@ -22,6 +24,16 @@ public class AlgoritmoPSO {
     
     public List<LocalDateTime> bloques;
     
+    public LocalAtencion getRandomLocalAtencion(){
+        Integer random = (new Random()).nextInt(locales.size());
+        return locales.get(random);
+    }
+    
+    public LocalDateTime getRandomBloque(){
+        Integer random = (new Random()).nextInt(bloques.size());
+        return bloques.get(random);
+    }
+    
     public AlgoritmoPSO(Beneficio bono, LocalDate fechaInicio, Integer dias) {
         //this.solucion = new Solucion(bono);
         this.fechaInicio = fechaInicio;
@@ -29,9 +41,6 @@ public class AlgoritmoPSO {
         this.dias = dias;
         this.locales = bono.getDist().getAgencias();
         this.beneficiarios = bono.getPad().getBeneficiarios();
-        
-        //
-        //this.bloques = new ArrayList<>(); //truco
         
     }
     
@@ -43,8 +52,10 @@ public class AlgoritmoPSO {
         List<ParticulaPSO> LPSO = new ArrayList<>();
         
         for(Integer i = 0; i < 30 ; i++){
-            ParticulaPSO ppso = new ParticulaPSO(beneficiarios, locales, fechaInicio, dias);
-            ppso.inicializarAleatoriamente(beneficiarios);
+            ParticulaPSO ppso = new ParticulaPSO(beneficiarios, locales, this, 
+                    fechaInicio, dias);
+            ppso.inicializarAleatoriamente();
+            ppso.transicion();
             LPSO.add(ppso);
             System.out.print("Se ha creado la particula " + i.toString() + "\n");
         }

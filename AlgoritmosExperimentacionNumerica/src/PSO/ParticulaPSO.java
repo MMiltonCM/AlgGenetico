@@ -15,9 +15,15 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class ParticulaPSO {
-    //private List<Beneficiario> beneficiarios;
+    private AlgoritmoPSO algoritmo;
+    private List<Beneficiario> beneficiarios;
+    private List<LocalAtencion> locales;
+    private LocalDate diaInicio;
+    private Integer dias;
+    
     private LinkedHashMap<Integer, LinkedHashMap<Integer, List<Integer> > > matriz;
     private LinkedHashMap<Integer, LocalDateTime> inicios;
     private LinkedHashMap<Integer, List<Integer>> asignaciones; //Primer elemento
@@ -26,16 +32,27 @@ public class ParticulaPSO {
     // Columna : ID de BloqueHorario de 30 minutos
     // Celda : ID de Beneficiario
     
-    public ParticulaPSO(List<Beneficiario> beneficiarios){
-        //this.beneficiarios = beneficiarios;
+    public ParticulaPSO(List<Beneficiario> beneficiarios, 
+            List<LocalAtencion> locales, AlgoritmoPSO algoritmo){
+        this.beneficiarios = beneficiarios;
+        this.locales = locales;
+        this.algoritmo = algoritmo;
+        
         matriz = new LinkedHashMap<Integer, LinkedHashMap<Integer, List<Integer> > >();
         inicios = new LinkedHashMap<Integer, LocalDateTime> ();
         asignaciones = new LinkedHashMap<Integer, List<Integer>>();
     }
     
     public ParticulaPSO(List<Beneficiario> beneficiarios, List<LocalAtencion> localesAtencion,
+            AlgoritmoPSO algoritmo, 
             LocalDate diaInicio, Integer numDias){
-        //this.beneficiarios = beneficiarios;
+        this.beneficiarios = beneficiarios;
+        this.locales = localesAtencion;
+        this.algoritmo = algoritmo;
+        
+        this.diaInicio = diaInicio;
+        this.dias = numDias;
+        
         matriz = new LinkedHashMap<Integer, LinkedHashMap<Integer, List<Integer> > >();
         inicios = new LinkedHashMap<Integer, LocalDateTime> ();
         asignaciones = new LinkedHashMap<Integer, List<Integer>>();
@@ -81,8 +98,8 @@ public class ParticulaPSO {
         }
     }
     
-    public void inicializarAleatoriamente(List<Beneficiario> benef){
-        LinkedList<Beneficiario> LL = new LinkedList<Beneficiario>(benef);
+    public void inicializarAleatoriamente(){
+        LinkedList<Beneficiario> LL = new LinkedList<Beneficiario>(beneficiarios);
         Collections.shuffle(LL);
         
         Iterator itLocal = matriz.keySet().iterator();
@@ -125,6 +142,38 @@ public class ParticulaPSO {
             }
             
         }
+    }
+    
+    public ParticulaPSO transicion(){
+        ParticulaPSO vecino = new ParticulaPSO(beneficiarios, locales, 
+                algoritmo, diaInicio, dias);
+        vecino.inicializarAleatoriamente();
+        Random r = new Random();
+        
+        for( Integer idbenef : vecino.asignaciones.keySet()){
+            
+            Integer localActual = vecino.asignaciones.get(idbenef).get(0);
+            Integer bloqueActual = vecino.asignaciones.get(idbenef).get(1);
+            
+            LocalAtencion localAlea = algoritmo.getRandomLocalAtencion();
+            LocalDateTime datetAlea = algoritmo.getRandomBloque();
+            Integer local = localAlea.getIdLocalAtencion();
+            Integer block = Hora.hashVisual(datetAlea);
+            
+            List<Integer> asignadosActual = vecino.matriz.get(localActual).get(bloqueActual);
+            List<Integer> asignadosDestino = vecino.matriz.get(local).get(block);
+            if (asignadosDestino.size()<Constantes.capacidad){
+                asignadosActual.remove(r);
+                vecino.asignaciones.remove(idbenef);
+                asignadosDestino.add(idbenef);
+                List<Integer> asig = new ArrayList<>();
+                asig.add(local);
+                asig.add(block);
+                vecino.asignaciones.put(idbenef, asig);
+            }
+        }
+        
+        return null;
     }
     
     public void fitness(){
