@@ -12,7 +12,7 @@ public class Distribuidora {
     
     public Distribuidora(String nombre, String archivoAgencias){
         this.nombre = nombre;
-        //this.agencias = CargarArchivos.CargarLocales(archivoAgencias);
+        this.agencias = CargarArchivos.CargarLocales(archivoAgencias);
     }
     
     public List<LocalAtencion> getAgencias() {
