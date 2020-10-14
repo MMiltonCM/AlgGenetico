@@ -40,6 +40,10 @@ public class LocalAtencion {
                     Constantes.tiempoAtencion.multipliedBy((long)i)) );
     }
     
+    public LocalAtencion(){
+    
+    }
+    
     public Integer getIdLocalAtencion() {
         return idLocalAtencion;
     }

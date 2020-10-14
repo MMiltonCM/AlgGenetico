@@ -6,7 +6,21 @@ package Modelo;
 import java.time.LocalDateTime;
 
 public class BloqueHorario {
-    // AGREGAR ID
+
+    /**
+     * @return the idBloqueHorario
+     */
+    public int getIdBloqueHorario() {
+        return idBloqueHorario;
+    }
+
+    /**
+     * @param idBloqueHorario the idBloqueHorario to set
+     */
+    public void setIdBloqueHorario(int idBloqueHorario) {
+        this.idBloqueHorario = idBloqueHorario;
+    }
+    private int idBloqueHorario;
     // TAMANO DE BLOQUE PARAMETRIZABLE
     public LocalAtencion local; // Oficina BCP La Molina
     public LocalDateTime inicio; // 10 de Oct 2020 5pm

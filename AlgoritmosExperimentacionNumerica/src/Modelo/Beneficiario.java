@@ -7,6 +7,7 @@ public class Beneficiario {
     public Integer idBeneficiario;
     public String DNI;
     public boolean flagDiscapacidad;
+    private boolean flagAdultoMayor;
     public Ubigeo ubigeo;
     
     public Beneficiario(){}
@@ -37,6 +38,20 @@ public class Beneficiario {
 
     public void setFlagDiscapacidad(boolean flagDiscapacidad) {
         this.flagDiscapacidad = flagDiscapacidad;
+    }
+
+    /**
+     * @return the flagAdultoMayor
+     */
+    public boolean isFlagAdultoMayor() {
+        return flagAdultoMayor;
+    }
+
+    /**
+     * @param flagAdultoMayor the flagAdultoMayor to set
+     */
+    public void setFlagAdultoMayor(boolean flagAdultoMayor) {
+        this.flagAdultoMayor = flagAdultoMayor;
     }
     
     

@@ -3,11 +3,18 @@
  */
 package Algoritmo;
 
+import Modelo.Beneficiario;
+import Modelo.BloqueHorario;
+import Modelo.Calendario;
+import Modelo.Cita;
+import Modelo.LocalAtencion;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class Individuo {
+    private static final int CANTIDAD_CROMOSOMAS_DEFINEN_OBJETO = 3;
     private double fitness;
     private List<Gen> cromosoma;
     
@@ -81,5 +88,48 @@ public class Individuo {
         
         return individuosResultantesCruzamiento;
         
+    }
+    
+    private Calendario construirCalendarioDesdeCromosoma(){
+        Calendario calendarioConstruido = new Calendario();
+        
+        List<Cita> citasCromosoma = new ArrayList<Cita>();
+        int numCitas = cromosoma.size() / CANTIDAD_CROMOSOMAS_DEFINEN_OBJETO;
+        
+        for (int i = 0; i < numCitas; i++){
+        
+            int indicePropiedadCita = i * CANTIDAD_CROMOSOMAS_DEFINEN_OBJETO;
+            
+            Cita citaCromosoma = new Cita();
+            
+            citaCromosoma.beneficiario = new Beneficiario();
+            
+            citaCromosoma.beneficiario.setIdBeneficiario(cromosoma.get(indicePropiedadCita).valor);
+            
+            indicePropiedadCita++;
+            
+            citaCromosoma.horario = new BloqueHorario();
+            
+            citaCromosoma.horario.local = new LocalAtencion();
+            
+            citaCromosoma.horario.local.setIdLocalAtencion(cromosoma.get(indicePropiedadCita).valor);
+            
+            indicePropiedadCita++;
+            
+            citaCromosoma.horario.setIdBloqueHorario(cromosoma.get(indicePropiedadCita).valor);
+            
+            citasCromosoma.add(citaCromosoma);
+            
+        }
+        
+        calendarioConstruido.setCitas(citasCromosoma);
+        
+        return calendarioConstruido;
+    }
+    
+    public void evaluarIndividuo(List<LocalAtencion> localesDeAtencionDisponibles, List<Beneficiario> beneficiariosAtender){
+        Calendario calendarioConstruido = construirCalendarioDesdeCromosoma();
+        
+        fitness = calendarioConstruido.evaluarCalendario(localesDeAtencionDisponibles, beneficiariosAtender);
     }
 }
