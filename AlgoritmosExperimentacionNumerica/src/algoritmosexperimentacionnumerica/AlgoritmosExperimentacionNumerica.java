@@ -6,11 +6,13 @@
 package algoritmosexperimentacionnumerica;
 
 import Algoritmo.AlgoritmoGenetico;
+import Modelo.Beneficiario;
 import Modelo.Beneficio;
 import Modelo.Calendario;
 import Modelo.Distribuidora;
 import Modelo.LocalAtencion;
 import Modelo.Padron;
+import PSO.AlgoritmoPSO;
 import PSO.ParticulaPSO;
 import Utils.Hora;
 import Utils.Printer;
@@ -29,15 +31,21 @@ import java.util.List;
 public class AlgoritmosExperimentacionNumerica {
 
     public static void main(String[] args) {
-        /* NO BORRAR : EXPERIMENTO
-        ParticulaPSO xd = new ParticulaPSO(null);
+        // NO BORRAR : EXPERIMENTO
+        
         Distribuidora dist = new Distribuidora("", "");
         List<LocalAtencion> L = new ArrayList<>();
-        L.add( new LocalAtencion(1, 1, 1, null, 1, LocalTime.of(8, 0), LocalTime.of(19, 0)) );
-        L.add( new LocalAtencion(2, 1, 1, null, 1, LocalTime.of(8, 0), LocalTime.of(19, 0)) );
+        for(Integer i = 0; i<3; i++) //En la data son 551, pero aqui cambio a gusto
+            L.add( new LocalAtencion(i, 1, 1, null, 1, LocalTime.of(8, 0), LocalTime.of(19, 0)) );
+        List<Beneficiario> LB = new ArrayList<>();
+        for(Integer i = 0; i<7; i++)
+            LB.add((new Beneficiario(i)));
         dist.setAgencias(L);
-        xd.crearMatriz(LocalDate.of(2020,10,12), 7, dist);
-        */
+        LocalDate fechaInicio = LocalDate.of(2020, 10, 12);
+        Padron P = new Padron("Padron Meramente Experimental", LB);
+        Beneficio bonoExp = new Beneficio("Bono Experimentacion", dist, P, fechaInicio);
+        AlgoritmoPSO alg = new AlgoritmoPSO(bonoExp, fechaInicio,1); //tercer argumento son dias
+        alg.ejecutar();
         
         // Primero crearemos la empresa que distribuye el beneficio
         Distribuidora banco = new Distribuidora("Banco Exp", "agentes.txt");
