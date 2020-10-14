@@ -20,6 +20,7 @@ public class LocalAtencion {
     public LocalTime horaFinAtencion;
     public Integer numeroBloques; //No es atributo de BD
     public List<LocalTime> bloques; //No es atributo de BD
+    public List<BloqueHorario> bloquesHorarios;
     
     public LocalAtencion(Integer idLocalAtencion, double latitud, 
             double longitud, String ubigeo, Integer capacidad, 
@@ -38,10 +39,12 @@ public class LocalAtencion {
         for(Integer i = 0; i<numeroBloques; i++)
             bloques.add( horaInicioAtencion.plus(
                     Constantes.tiempoAtencion.multipliedBy((long)i)) );
+        
+        bloquesHorarios = new ArrayList<BloqueHorario>();
     }
     
     public LocalAtencion(){
-    
+        bloquesHorarios = new ArrayList<BloqueHorario>();
     }
     
     public Integer getIdLocalAtencion() {

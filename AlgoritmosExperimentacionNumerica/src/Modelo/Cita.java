@@ -70,6 +70,17 @@ public class Cita {
         
     }
     
+    private double obtenerGradoAglomeracion(BloqueHorario bloqueHorarioCita, LocalAtencion localDeAtencionCita){
+    
+        int numeroPersonasLocalDeAtencion = bloqueHorarioCita.getNumeroBeneficiariosAsignados();
+        
+        int capacidadLocalDeAtencion = localDeAtencionCita.getCapacidad();
+        
+        double gradoAglomeracion = ((double) numeroPersonasLocalDeAtencion) / capacidadLocalDeAtencion;
+        
+        return gradoAglomeracion;
+    }
+    
     public double obtenerPuntuacionAFavor(List<LocalAtencion> localesDeAtencionDisponibles, List<Beneficiario> beneficiariosAtender){
     
         double puntajeAFavor = 0.0;
@@ -87,6 +98,12 @@ public class Cita {
     public double obtenerPuntuacionEnContra (List<LocalAtencion> localesDeAtencionDisponibles, List<Beneficiario> beneficiariosAtender){
     
         double puntajeEnContra = 0.0;
+        
+        LocalAtencion localDeAtencionCita = obtenerLocalDeAtencionCita(localesDeAtencionDisponibles);
+        
+        Beneficiario beneficiarioCita = obtenerBeneficiarioCita(beneficiariosAtender);
+        
+        puntajeEnContra += obtenerGradoAglomeracion(horario, localDeAtencionCita);
         
         return puntajeEnContra;
         

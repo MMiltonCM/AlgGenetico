@@ -8,6 +8,20 @@ import java.time.LocalDateTime;
 public class BloqueHorario {
 
     /**
+     * @return the numeroBeneficiariosAsignados
+     */
+    public int getNumeroBeneficiariosAsignados() {
+        return numeroBeneficiariosAsignados;
+    }
+
+    /**
+     * @param numeroBeneficiariosAsignados the numeroBeneficiariosAsignados to set
+     */
+    public void setNumeroBeneficiariosAsignados(int numeroBeneficiariosAsignados) {
+        this.numeroBeneficiariosAsignados = numeroBeneficiariosAsignados;
+    }
+
+    /**
      * @return the idBloqueHorario
      */
     public int getIdBloqueHorario() {
@@ -30,6 +44,7 @@ public class BloqueHorario {
         this.fin = fin;
     }
     
+    private int numeroBeneficiariosAsignados;
     // TAMANO DE BLOQUE PARAMETRIZABLE
     public LocalAtencion local; // Oficina BCP La Molina
     public LocalDateTime inicio; // 10 de Oct 2020 5pm
