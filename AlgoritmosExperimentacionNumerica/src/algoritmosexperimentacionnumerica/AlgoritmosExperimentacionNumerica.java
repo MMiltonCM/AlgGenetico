@@ -12,8 +12,10 @@ import Modelo.Calendario;
 import Modelo.Distribuidora;
 import Modelo.LocalAtencion;
 import Modelo.Padron;
+import Modelo.Pais;
 import PSO.AlgoritmoPSO;
 import PSO.ParticulaPSO;
+import Utils.CargarArchivos;
 import Utils.Hora;
 import Utils.Printer;
 import java.time.Duration;
@@ -31,9 +33,12 @@ import java.util.List;
 public class AlgoritmosExperimentacionNumerica {
 
     public static void main(String[] args) {
-        // NO BORRAR : EXPERIMENTO
-        
-        Distribuidora dist = new Distribuidora("", "");
+        // Data comun a los archivos. Ubicaciones geograficas del peru
+        Pais peru = new Pais();
+        CargarArchivos.CargarUbigeos("ubigeos.txt", peru);
+
+        // NO BORRAR : EXPERIMENTO 
+        Distribuidora dist = new Distribuidora("", "", peru);
         List<LocalAtencion> L = new ArrayList<>();
         for(Integer i = 0; i<3; i++) //En la data son 551, pero aqui cambio a gusto
             L.add( new LocalAtencion(i, 1, 1, null, 1, LocalTime.of(8, 0), LocalTime.of(19, 0)) );
@@ -48,10 +53,10 @@ public class AlgoritmosExperimentacionNumerica {
         alg.ejecutar();
         
         // Primero crearemos la empresa que distribuye el beneficio
-        Distribuidora banco = new Distribuidora("Banco Exp", "agentes.txt");
+        Distribuidora banco = new Distribuidora("Banco Exp", "agentes.txt",peru);
         
         // Ahora registramos un padron donde estaran los beneficiarios
-        Padron personas = new Padron("Familias afectas economicamente", "padron.txt");
+        Padron personas = new Padron("Familias afectas economicamente", "padron_prueba.txt",peru);
         
         // Con la informacion construimos el beneficio creara los bloques de horarios posibles
         Beneficio bono = new Beneficio("Bono Experimentacion", banco, personas, LocalDate.of(2020,9,10));

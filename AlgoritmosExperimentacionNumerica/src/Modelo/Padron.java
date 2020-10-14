@@ -15,9 +15,9 @@ public class Padron {
         this.descripcion = descripcion;
     }
     
-    public Padron(String descripcion, String archivoPadron) {
+    public Padron(String descripcion, String archivoPadron,Pais p) {
         this.descripcion = descripcion;
-        this.beneficiarios = CargarArchivos.CargarPadron(archivoPadron);
+        this.beneficiarios = CargarArchivos.CargarPadron(archivoPadron,p);
     }
 
     public List<Beneficiario> getBeneficiarios() {

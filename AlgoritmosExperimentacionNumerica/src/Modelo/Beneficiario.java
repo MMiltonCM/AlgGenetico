@@ -7,8 +7,7 @@ public class Beneficiario {
     public Integer idBeneficiario;
     public String DNI;
     public boolean flagDiscapacidad;
-    // Agregar Ubigeo Region/Provincia/Distrito LIMALIMASANMIGUEL = 112035
-    // Coordenadas por si acaso
+    public Ubigeo ubigeo;
     
     public Beneficiario(){}
     
