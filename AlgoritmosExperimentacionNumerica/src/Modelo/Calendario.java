@@ -39,9 +39,57 @@ public class Calendario {
     
     // Metodo para agendar Cita
     
+    private int calcularCantidadBeneficiariosBloquesHorario(LocalAtencion localDeAtencionDisponible, BloqueHorario horarioLocalDeAtencionDisponible){
+    
+        int cantidadBeneficiariosBloquesHorario = 0;
+        
+        for (Cita citaNueva : citas){
+        
+            if((citaNueva.horario.getIdBloqueHorario() == horarioLocalDeAtencionDisponible.getIdBloqueHorario()) && (citaNueva.horario.local.getIdLocalAtencion() == localDeAtencionDisponible.getIdLocalAtencion()))
+                
+                cantidadBeneficiariosBloquesHorario++;
+            
+        }
+        
+        return cantidadBeneficiariosBloquesHorario;
+        
+    }
+    
+    private void actualizarCantidadBeneficiariosBloquesHorarios(List<LocalAtencion> localesDeAtencionDisponibles){
+    
+        for (LocalAtencion localDeAtencionDisponible : localesDeAtencionDisponibles){
+        
+            for (BloqueHorario horarioLocalDeAtencionDisponible : localDeAtencionDisponible.bloquesHorarios){
+            
+                int cantidadBeneficiariosBloquesHorario = calcularCantidadBeneficiariosBloquesHorario(localDeAtencionDisponible, horarioLocalDeAtencionDisponible);
+                
+                for (Cita citaNueva : citas){
+        
+                    if((citaNueva.horario.getIdBloqueHorario() == horarioLocalDeAtencionDisponible.getIdBloqueHorario()) && (citaNueva.horario.local.getIdLocalAtencion() == localDeAtencionDisponible.getIdLocalAtencion()))
+                
+                        citaNueva.horario.setNumeroBeneficiariosAsignados(cantidadBeneficiariosBloquesHorario);
+            
+                }
+                
+            }
+        }
+    }
+    
     private boolean evaluarFactibilidadCalendario(){
     
-        return true;
+        boolean esFactible = true;
+        
+        for (Cita citaNueva : citas){
+        
+            esFactible = (citaNueva.horario.getNumeroBeneficiariosAsignados() <= citaNueva.horario.local.getCapacidad());
+            
+            if (!esFactible)
+                
+                break;
+        
+        }
+        
+        return esFactible;
         
     }
     
@@ -95,7 +143,7 @@ public class Calendario {
         
         else
             
-            resultadoEvaluacion = -1.0;
+            resultadoEvaluacion = -100000.0;
         
         return resultadoEvaluacion;
     }
