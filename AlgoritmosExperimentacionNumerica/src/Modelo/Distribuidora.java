@@ -10,9 +10,9 @@ public class Distribuidora {
     private List<LocalAtencion> agencias;
     private String nombre;
     
-    public Distribuidora(String nombre, String archivoAgencias){
+    public Distribuidora(String nombre, String archivoAgencias, Pais p){
         this.nombre = nombre;
-        this.agencias = CargarArchivos.CargarLocales(archivoAgencias);
+        this.agencias = CargarArchivos.CargarLocales(archivoAgencias, p);
     }
     
     public List<LocalAtencion> getAgencias() {
