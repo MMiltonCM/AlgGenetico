@@ -9,6 +9,7 @@ import Modelo.Distribuidora;
 import Modelo.LocalAtencion;
 import Utils.Constantes;
 import Utils.Hora;
+import Utils.Probabilidades;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -219,6 +220,61 @@ public class ParticulaPSO {
         }
         
         return vecino;
+    }
+    
+    public ParticulaPSO transicionMultiorientada(List<Double> probabilidades,
+            List<ParticulaPSO> influyentes){
+        
+        //List<Double> probsNorm = Probabilidades.normalizar(probabilidades);
+        List<Double> probsNorm = probabilidades;
+        ParticulaPSO nuevo = new ParticulaPSO(beneficiarios, locales, 
+                algoritmo, diaInicio, dias);
+        
+        List<Integer> noAsignables = new ArrayList<>();
+        
+        for( Integer idbenef : asignaciones.keySet()){
+            Integer imitaA = Probabilidades.seleccionar(probsNorm);
+            //imitaA representa a la partícula a la que va a imitarse
+            ParticulaPSO particulaDestino = influyentes.get(imitaA);
+            
+            List<Integer> ubicacionDestino = particulaDestino.asignaciones.get(idbenef);
+            Integer localDestino = ubicacionDestino.get(0);
+            Integer hashBloqueDestino = ubicacionDestino.get(1);
+            
+            List<Integer> listaDestino = particulaDestino.matriz.get(localDestino).get(hashBloqueDestino);
+            
+            if(listaDestino.size() < Constantes.capacidad){
+                nuevo.matriz.get(localDestino).get(hashBloqueDestino).add(idbenef);
+                List<Integer> lista = new ArrayList<Integer>();
+                lista.add(localDestino);
+                lista.add(hashBloqueDestino);
+                nuevo.asignaciones.put(idbenef, lista);
+            } else
+                noAsignables.add(idbenef);
+        }
+        
+        for(Integer noAsignado : noAsignables){
+            Boolean asignado = false;
+            while(! asignado){
+                LocalAtencion nuevoLocal = algoritmo.getRandomLocalAtencion();
+                LocalDateTime bloque = this.getRandomBloque();
+                
+                List<Integer> listaDestino = this.matriz.get(nuevoLocal.getIdLocalAtencion()).
+                        get(bloque.hashCode());
+                
+                if(listaDestino.size() < Constantes.capacidad){
+                    nuevo.matriz.get(nuevoLocal.getIdLocalAtencion()).
+                            get(bloque.hashCode()).add(noAsignado);
+                    List<Integer> lista = new ArrayList<Integer>();
+                    lista.add(nuevoLocal.getIdLocalAtencion());
+                    lista.add(bloque.hashCode());
+                    nuevo.asignaciones.put(noAsignado, lista);
+                    asignado = true;
+                }
+            }
+        }
+        
+        return nuevo;
     }
     
     public void fitness(){

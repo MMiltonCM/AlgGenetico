@@ -62,14 +62,15 @@ public class AlgoritmosExperimentacionNumerica {
         // Con la informacion construimos el beneficio creara los bloques de horarios posibles
         Beneficio bono = new Beneficio("Bono Experimentacion", banco, personas, LocalDate.of(2020,9,10));
         
-        Integer numBucles = 200;
-        Integer numVecindades = 5;
-        Integer numVecinos = 3;
-        Double prob = 1.0;
+        Integer numBucles = 500;
+        Integer numParticulas = 30;
+        Double aleatorizador = 0.8;
+        Double inercia = 0.1;
+        Double pesoLocal = 0.35;
+        Double pesoGlobal = 0.55;
         
-        AlgoritmoPSO algPSO = new AlgoritmoPSO(bono, LocalDate.of(2020,9,10),2);
-        //algPSO.ejecutar();
-        Calendario calPSO = algPSO.ejecutarPSO(numBucles, numVecindades, numVecinos, prob);
+        AlgoritmoPSO algPSO = new AlgoritmoPSO(bono, LocalDate.of(2020,9,10),1);
+        Calendario calPSO = algPSO.ejecutarPSOv2(numBucles, numParticulas, aleatorizador, inercia, pesoLocal, pesoGlobal);
         
         int tamanoPoblacion = 10;
         int numeroGeneraciones = 50;
