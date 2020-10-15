@@ -67,7 +67,7 @@ public class AlgoritmosExperimentacionNumerica {
         
         
         
-        AlgoritmoPSO algPSO = new AlgoritmoPSO(bono, LocalDate.of(2020,9,10),3);
+        AlgoritmoPSO algPSO = new AlgoritmoPSO(bono, LocalDate.of(2020,9,10),30);
         algPSO.ejecutar();
         
         

@@ -39,15 +39,16 @@ public class Calendario {
     
     // Metodo para agendar Cita
     
-    private int calcularCantidadBeneficiariosBloquesHorario(LocalAtencion localDeAtencionDisponible, BloqueHorario horarioLocalDeAtencionDisponible){
+    private int calcularCantidadBeneficiariosBloquesHorario(LocalAtencion localDeAtencionDisponible, 
+            BloqueHorario horarioLocalDeAtencionDisponible){
     
         int cantidadBeneficiariosBloquesHorario = 0;
         
         for (Cita citaNueva : citas){
         
-            if((citaNueva.getHorario().getIdBloqueHorario() == horarioLocalDeAtencionDisponible.getIdBloqueHorario()) && (citaNueva.getHorario().getLocal().getIdLocalAtencion() == localDeAtencionDisponible.getIdLocalAtencion()))
-                
-                cantidadBeneficiariosBloquesHorario++;
+            if((citaNueva.getHorario().getIdBloqueHorario() == horarioLocalDeAtencionDisponible.getIdBloqueHorario()) )
+                if(citaNueva.getHorario().getLocal().getIdLocalAtencion() == localDeAtencionDisponible.getIdLocalAtencion())
+                    cantidadBeneficiariosBloquesHorario++;
             
         }
         
@@ -61,11 +62,13 @@ public class Calendario {
         
             for (BloqueHorario horarioLocalDeAtencionDisponible : localDeAtencionDisponible.bloquesHorarios){
             
-                int cantidadBeneficiariosBloquesHorario = calcularCantidadBeneficiariosBloquesHorario(localDeAtencionDisponible, horarioLocalDeAtencionDisponible);
+                int cantidadBeneficiariosBloquesHorario = 
+                        calcularCantidadBeneficiariosBloquesHorario(localDeAtencionDisponible, horarioLocalDeAtencionDisponible);
                 
                 for (Cita citaNueva : citas){
         
-                    if((citaNueva.getHorario().getIdBloqueHorario() == horarioLocalDeAtencionDisponible.getIdBloqueHorario()) && (citaNueva.getHorario().getLocal().getIdLocalAtencion() == localDeAtencionDisponible.getIdLocalAtencion()))
+                    if((citaNueva.getHorario().getIdBloqueHorario() == horarioLocalDeAtencionDisponible.getIdBloqueHorario()) 
+                            && (citaNueva.getHorario().getLocal().getIdLocalAtencion() == localDeAtencionDisponible.getIdLocalAtencion()))
                 
                         citaNueva.getHorario().setNumeroBeneficiariosAsignados(cantidadBeneficiariosBloquesHorario);
             

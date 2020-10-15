@@ -42,16 +42,20 @@ public class ParticulaPSO {
         List<Cita> lista = new ArrayList<>();
         
         for(Integer idBenef : asignaciones.keySet()){
+            Integer idLocalAsignado = asignaciones.get(idBenef).get(0);
+            Integer hashBloqueAsignado = asignaciones.get(idBenef).get(1);
+            
             Cita C = new Cita();
             C.setBeneficiario(algoritmo.getBeneficiario(idBenef));
-            BloqueHorario BH = new BloqueHorario();
-            BH.setIdBloqueHorario();
+            //BloqueHorario BH = new BloqueHorario();
+            BloqueHorario BH = algoritmo.getBloqueHorario(idLocalAsignado, hashBloqueAsignado);
+            //BH.setIdBloqueHorario();
             Integer hashInicio = asignaciones.get(idBenef).get(1);
             LocalDateTime inicioBH = inicios.get(hashInicio);
             LocalDateTime finBH = inicioBH.plus(Constantes.tiempoAtencion);
-            BH.setInicio( inicioBH );
-            BH.setFin( finBH );
-            BH.setLocal( algoritmo.getLocalAtencion( asignaciones.get(idBenef).get(0) ) );
+            //BH.setInicio( inicioBH );
+            //BH.setFin( finBH );
+            //BH.setLocal( algoritmo.getLocalAtencion( asignaciones.get(idBenef).get(0) ) );
             C.setBeneficiario( algoritmo.getBeneficiario(idBenef) );
             C.setHorario(BH);
             

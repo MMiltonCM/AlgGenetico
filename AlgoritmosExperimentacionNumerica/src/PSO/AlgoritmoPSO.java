@@ -3,6 +3,7 @@ package PSO;
 import Algoritmo.Solucion;
 import Modelo.Beneficiario;
 import Modelo.Beneficio;
+import Modelo.BloqueHorario;
 import Modelo.Calendario;
 import Modelo.LocalAtencion;
 import Utils.Hora;
@@ -46,6 +47,14 @@ public class AlgoritmoPSO {
         return mapBeneficiarios.get(idBenef);
     }
     
+    public BloqueHorario getBloqueHorario(Integer idLocalAsignado, Integer hashBloqueAsignado){
+        LocalAtencion LA = getLocalAtencion(idLocalAsignado);
+        for(BloqueHorario BH : LA.bloquesHorarios)
+            if (BH.inicio.hashCode() == hashBloqueAsignado)
+                return BH;
+        return null;
+    }
+    
     public AlgoritmoPSO(Beneficio bono, LocalDate fechaInicio, Integer dias) {
         //this.solucion = new Solucion(bono);
         this.fechaInicio = fechaInicio;
@@ -70,7 +79,7 @@ public class AlgoritmoPSO {
         
         List<ParticulaPSO> LPSO = new ArrayList<>();
         
-        for(Integer i = 0; i < 100 ; i++){
+        for(Integer i = 0; i < 200 ; i++){
             ParticulaPSO ppso1 = new ParticulaPSO(beneficiarios, locales, this, 
                     fechaInicio, dias);
             ppso1.inicializarAleatoriamente();
@@ -83,10 +92,66 @@ public class AlgoritmoPSO {
             System.out.print("Se ha creado la particula " + ((Integer)(2*i+1)).toString() + "\n");
             System.out.print("Fitness " + (Double)(ppso2.evaluar(bono)) + "\n");
             
-            System.out.print(" ===================================== ");
+            System.out.print(" ===================================== \n");
         }
         
         
+        
+    }
+    
+    public void imprimirParticulas(List<ParticulaPSO> LPSO){
+        System.out.print("========================\n");
+        for(Integer i = 0; i<LPSO.size(); i++){
+            System.out.print("" + ((Double)LPSO.get(i).evaluar(bono)).toString() + "\n");
+        }
+        System.out.print("========================\n");
+    }
+    
+    public void ejecutarPSO(){
+        
+        Integer limite = 100;
+        Integer numVecindades = 20;
+        Integer numVecinos = 5;
+        
+        List<ParticulaPSO> LPSO = new ArrayList<>();
+        for(Integer i = 0; i<numVecindades; i++)
+            LPSO.add(new ParticulaPSO(beneficiarios, locales, this, fechaInicio, dias));
+        
+        imprimirParticulas(LPSO);
+        
+        for(Integer i = 0; i<limite; i++){ //bucle limite de veces
+            
+            for(Integer j = 0; j<numVecindades; j++){
+                
+                ParticulaPSO vecinoBase = LPSO.get(j);
+                
+                ParticulaPSO mejorPartLocal = vecinoBase;
+                Double mejorFitLocal = mejorPartLocal.evaluar(bono);
+                
+                for(Integer k = 0; k<numVecinos; k++){
+                    ParticulaPSO vecinoK = vecinoBase.transicion();
+                    Double fitVecinoK = vecinoK.evaluar(bono);
+                    if (mejorFitLocal < fitVecinoK){
+                        mejorPartLocal = vecinoK;
+                        mejorFitLocal = fitVecinoK;
+                    }
+                }
+                
+                LPSO.set(j, mejorPartLocal);
+                
+            }
+            imprimirParticulas(LPSO);
+        }
+        
+        ParticulaPSO mejorGlobal = LPSO.get(0);
+        Double mejorFitnessGlobal = mejorGlobal.evaluar(bono);
+        for(Integer i = 1; i<numVecindades; i++){
+            Double fitness = LPSO.get(i).evaluar(bono);
+            if (mejorFitnessGlobal < fitness){
+                mejorGlobal = LPSO.get(i);
+                mejorFitnessGlobal = fitness;
+            }
+        }
         
     }
 }
