@@ -5,6 +5,8 @@ package Modelo;
 
 import Utils.Constantes;
 import Utils.Hora;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +42,30 @@ public class LocalAtencion {
             bloques.add( horaInicioAtencion.plus(
                     Constantes.tiempoAtencion.multipliedBy((long)i)) );
         
+    }
+    
+    public void crearBloquesHorarios(LocalDate diaInicio, Integer dias){
         bloquesHorarios = new ArrayList<BloqueHorario>();
+        
+        LocalDateTime bloqueInicial = bloques.get(0).atDate(diaInicio);;
+        LocalDateTime bloqueActual = bloqueInicial;
+        
+        for(Integer i = 0; i<dias; i++){
+            
+            for(Integer j = 0; j<numeroBloques; j++){
+                BloqueHorario BH = new BloqueHorario();
+                BH.setInicio(bloqueActual);
+                LocalDateTime bloqueFin = bloqueActual.plus(Constantes.tiempoAtencion);
+                BH.setFin(bloqueFin);
+                BH.setLocal(this);
+                BH.setNumeroBeneficiariosAsignados(0);
+                BH.setIdBloqueHorario(0);
+                bloquesHorarios.add(BH);
+                
+                bloqueActual = bloqueFin;
+            }
+                bloqueActual = bloqueInicial.plusDays(i+1);
+        }
     }
     
     public LocalAtencion(){

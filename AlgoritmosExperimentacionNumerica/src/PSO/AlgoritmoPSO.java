@@ -51,6 +51,8 @@ public class AlgoritmoPSO {
         this.fechaInicio = fechaInicio;
         this.dias = dias;
         this.locales = bono.getDist().getAgencias();
+        for(Integer i = 0; i < locales.size(); i++)
+            locales.get(i).crearBloquesHorarios(fechaInicio, dias);
         this.mapLocales = new LinkedHashMap<Integer, LocalAtencion>();
         this.mapBeneficiarios = new LinkedHashMap<Integer, Beneficiario>();
         for(LocalAtencion LA : locales)
