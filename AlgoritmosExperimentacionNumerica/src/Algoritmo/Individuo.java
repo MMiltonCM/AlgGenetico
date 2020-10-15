@@ -130,6 +130,8 @@ public class Individuo {
     public void evaluarIndividuo(List<LocalAtencion> localesDeAtencionDisponibles, List<Beneficiario> beneficiariosAtender){
         Calendario calendarioConstruido = construirCalendarioDesdeCromosoma();
         
+        calendarioConstruido.actualizarCantidadBeneficiariosBloquesHorarios(localesDeAtencionDisponibles);
+        
         fitness = calendarioConstruido.evaluarCalendario(localesDeAtencionDisponibles, beneficiariosAtender);
     }
 }
