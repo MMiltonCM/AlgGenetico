@@ -5,6 +5,7 @@ package Algoritmo;
 
 import Modelo.Beneficiario;
 import Modelo.Beneficio;
+import Modelo.BloqueHorario;
 import Modelo.Calendario;
 import Modelo.LocalAtencion;
 import java.util.ArrayList;
@@ -23,7 +24,6 @@ public class Solucion {
     
     public Solucion(Beneficio bono){
         this.bono = bono;
-        // Crear individuos en base a los beneficiarios del padron
     }
     
     private void evaluarPoblacion(List<Individuo> poblacion, List<LocalAtencion> localesDeAtencionDisponibles, List<Beneficiario> beneficiariosAtender){
@@ -36,11 +36,27 @@ public class Solucion {
         
     }
     
-    private List<Individuo> generarPoblacionInicial(int tamanoPoblacion){
+    private List<Individuo> generarPoblacionInicial(int cant, List<Beneficiario> gente, List<LocalAtencion> locales){
     
-        List<Individuo> poblacion = new ArrayList<Individuo>();
+        List<Individuo> poblacion = new ArrayList<>();
         
-        //Hacer logica para inicializar poblacion. Puede que requieran parametros adicionales
+        int maxLocales = locales.size();
+        
+        for(int i=0; i<cant; i++){
+            Individuo d = new Individuo();
+            for(Beneficiario b : gente){
+                Gen persona = new Gen("IDENTIFICADOR",b.getIdBeneficiario());
+                d.agregarGenACromosoma(persona);
+                LocalAtencion l = locales.get((int)(Math.random()*maxLocales));
+                Gen loc = new Gen("VARIABLE", l.getIdLocalAtencion());
+                d.agregarGenACromosoma(loc);
+                int maxbh = l.bloquesHorarios.size();
+                BloqueHorario bh = l.bloquesHorarios.get((int)(Math.random()*maxbh));
+                Gen hor = new Gen("VARIABLE", bh.getIdBloqueHorario());
+                d.agregarGenACromosoma(hor);
+            }
+            poblacion.add(d);
+        }
         
         return poblacion;
         
@@ -253,7 +269,7 @@ public class Solucion {
         
         // Crear una poblacion con los beneficiario del padron. Asignar cita aleatoria
         
-        List<Individuo> poblacion = generarPoblacionInicial(tamanoPoblacion);
+        List<Individuo> poblacion = generarPoblacionInicial(tamanoPoblacion, beneficiariosAtender,localesDeAtencionDisponibles);
         
         evaluarPoblacion(poblacion, localesDeAtencionDisponibles, beneficiariosAtender);
         
