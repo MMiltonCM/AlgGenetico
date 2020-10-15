@@ -70,10 +70,12 @@ public class AlgoritmosExperimentacionNumerica {
         AlgoritmoPSO algPSO = new AlgoritmoPSO(bono, LocalDate.of(2020,9,10),30);
         algPSO.ejecutar();
         
+        int tamanoPoblacion = 10;
+        int numeroGeneraciones = 50;
         
         // Despues le brindamos esta informacion a nuestros algoritmos para que nos devuelvan un Calendario de citas
         AlgoritmoGenetico AG = new AlgoritmoGenetico(bono);
-        Calendario calGenetico = AG.ejecutar();
+        Calendario calGenetico = AG.ejecutar(tamanoPoblacion, numeroGeneraciones);
         
         // Algoritmo 2
         
