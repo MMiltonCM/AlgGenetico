@@ -24,6 +24,8 @@ public class LocalAtencion {
     public List<LocalTime> bloques; //No es atributo de BD
     public List<BloqueHorario> bloquesHorarios;
     
+    public static Integer contador = 0;
+    
     public LocalAtencion(Integer idLocalAtencion, double latitud, 
             double longitud, String ubigeo, Integer capacidad, 
             LocalTime horaInicioAtencion, LocalTime horaFinAtencion) {
@@ -59,7 +61,7 @@ public class LocalAtencion {
                 BH.setFin(bloqueFin);
                 BH.setLocal(this);
                 BH.setNumeroBeneficiariosAsignados(0);
-                BH.setIdBloqueHorario(0);
+                BH.setIdBloqueHorario();
                 bloquesHorarios.add(BH);
                 
                 bloqueActual = bloqueFin;

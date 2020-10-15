@@ -6,12 +6,14 @@ package Modelo;
 import java.time.LocalDateTime;
 
 public class BloqueHorario {
-    
+    public int idBloqueHorario;
     public int numeroBeneficiariosAsignados;
     // TAMANO DE BLOQUE PARAMETRIZABLE
     public LocalAtencion local; // Oficina BCP La Molina
     public LocalDateTime inicio; // 10 de Oct 2020 5pm
     public LocalDateTime fin; //10 de Oct 2020 6pm
+    
+    public static int contador = 0;
 
     public LocalAtencion getLocal() {
         return local;
@@ -64,7 +66,10 @@ public class BloqueHorario {
     public void setIdBloqueHorario(int idBloqueHorario) {
         this.idBloqueHorario = idBloqueHorario;
     }
-    private int idBloqueHorario;
+    
+    public void setIdBloqueHorario(){
+        this.idBloqueHorario = ++contador;
+    }
 
     public BloqueHorario(){};
     

@@ -45,7 +45,7 @@ public class ParticulaPSO {
             Cita C = new Cita();
             C.setBeneficiario(algoritmo.getBeneficiario(idBenef));
             BloqueHorario BH = new BloqueHorario();
-            BH.setIdBloqueHorario(0);
+            BH.setIdBloqueHorario();
             Integer hashInicio = asignaciones.get(idBenef).get(1);
             LocalDateTime inicioBH = inicios.get(hashInicio);
             LocalDateTime finBH = inicioBH.plus(Constantes.tiempoAtencion);
