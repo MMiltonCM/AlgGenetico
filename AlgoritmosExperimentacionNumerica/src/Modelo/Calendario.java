@@ -143,7 +143,7 @@ public class Calendario {
         
         else
             
-            resultadoEvaluacion = -100000.0;
+            resultadoEvaluacion = Double.MIN_VALUE;
         
         return resultadoEvaluacion;
     }
