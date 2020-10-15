@@ -66,10 +66,10 @@ public class AlgoritmosExperimentacionNumerica {
         Beneficio bono = new Beneficio("Bono Experimentacion", banco, personas, LocalDate.of(2020,9,10));
         
         
-        /*
+        
         AlgoritmoPSO algPSO = new AlgoritmoPSO(bono, LocalDate.of(2020,9,10),5);
         algPSO.ejecutar();
-        */
+        
         
         // Despues le brindamos esta informacion a nuestros algoritmos para que nos devuelvan un Calendario de citas
         AlgoritmoGenetico AG = new AlgoritmoGenetico(bono);

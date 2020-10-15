@@ -9,6 +9,7 @@ import Utils.Hora;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -19,8 +20,11 @@ public class AlgoritmoPSO {
     
     public LocalDate fechaInicio;
     public List<Beneficiario> beneficiarios;
+    public LinkedHashMap<Integer, Beneficiario> mapBeneficiarios;
     public List<LocalAtencion> locales;
+    public LinkedHashMap<Integer, LocalAtencion> mapLocales;
     public Integer dias;
+    public Beneficio bono;
     
     public List<LocalDateTime> bloques;
     
@@ -34,14 +38,27 @@ public class AlgoritmoPSO {
         return bloques.get(random);
     }
     
+    public LocalAtencion getLocalAtencion(Integer idLocal){
+        return mapLocales.get(idLocal);
+    }
+    
+    public Beneficiario getBeneficiario(Integer idBenef){
+        return mapBeneficiarios.get(idBenef);
+    }
+    
     public AlgoritmoPSO(Beneficio bono, LocalDate fechaInicio, Integer dias) {
         //this.solucion = new Solucion(bono);
         this.fechaInicio = fechaInicio;
-        this.beneficiarios = null;
         this.dias = dias;
         this.locales = bono.getDist().getAgencias();
+        this.mapLocales = new LinkedHashMap<Integer, LocalAtencion>();
+        this.mapBeneficiarios = new LinkedHashMap<Integer, Beneficiario>();
+        for(LocalAtencion LA : locales)
+            mapLocales.put(LA.getIdLocalAtencion(), LA);
         this.beneficiarios = bono.getPad().getBeneficiarios();
-        
+        for(Beneficiario B : beneficiarios)
+            mapBeneficiarios.put(B.getIdBeneficiario(), B);
+        this.bono = bono;
     }
     
     public void ejecutar(){
@@ -59,8 +76,12 @@ public class AlgoritmoPSO {
             Integer j = i;
             LPSO.add(ppso1);
             System.out.print("Se ha creado la particula " + ((Integer)(2*i)).toString() + "\n");
+            System.out.print("Fitness " + (Double)(ppso1.evaluar(bono)) + "\n");
             LPSO.add(ppso2);
             System.out.print("Se ha creado la particula " + ((Integer)(2*i+1)).toString() + "\n");
+            System.out.print("Fitness " + (Double)(ppso2.evaluar(bono)) + "\n");
+            
+            System.out.print(" ===================================== ");
         }
         
         

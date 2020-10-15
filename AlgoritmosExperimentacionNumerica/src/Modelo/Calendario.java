@@ -45,7 +45,7 @@ public class Calendario {
         
         for (Cita citaNueva : citas){
         
-            if((citaNueva.horario.getIdBloqueHorario() == horarioLocalDeAtencionDisponible.getIdBloqueHorario()) && (citaNueva.horario.local.getIdLocalAtencion() == localDeAtencionDisponible.getIdLocalAtencion()))
+            if((citaNueva.getHorario().getIdBloqueHorario() == horarioLocalDeAtencionDisponible.getIdBloqueHorario()) && (citaNueva.getHorario().getLocal().getIdLocalAtencion() == localDeAtencionDisponible.getIdLocalAtencion()))
                 
                 cantidadBeneficiariosBloquesHorario++;
             
@@ -55,7 +55,7 @@ public class Calendario {
         
     }
     
-    private void actualizarCantidadBeneficiariosBloquesHorarios(List<LocalAtencion> localesDeAtencionDisponibles){
+    public void actualizarCantidadBeneficiariosBloquesHorarios(List<LocalAtencion> localesDeAtencionDisponibles){
     
         for (LocalAtencion localDeAtencionDisponible : localesDeAtencionDisponibles){
         
@@ -65,9 +65,9 @@ public class Calendario {
                 
                 for (Cita citaNueva : citas){
         
-                    if((citaNueva.horario.getIdBloqueHorario() == horarioLocalDeAtencionDisponible.getIdBloqueHorario()) && (citaNueva.horario.local.getIdLocalAtencion() == localDeAtencionDisponible.getIdLocalAtencion()))
+                    if((citaNueva.getHorario().getIdBloqueHorario() == horarioLocalDeAtencionDisponible.getIdBloqueHorario()) && (citaNueva.getHorario().getLocal().getIdLocalAtencion() == localDeAtencionDisponible.getIdLocalAtencion()))
                 
-                        citaNueva.horario.setNumeroBeneficiariosAsignados(cantidadBeneficiariosBloquesHorario);
+                        citaNueva.getHorario().setNumeroBeneficiariosAsignados(cantidadBeneficiariosBloquesHorario);
             
                 }
                 
@@ -81,7 +81,7 @@ public class Calendario {
         
         for (Cita citaNueva : citas){
         
-            esFactible = (citaNueva.horario.getNumeroBeneficiariosAsignados() <= citaNueva.horario.local.getCapacidad());
+            esFactible = (citaNueva.getHorario().getNumeroBeneficiariosAsignados() <= citaNueva.getHorario().getLocal().getCapacidad());
             
             if (!esFactible)
                 

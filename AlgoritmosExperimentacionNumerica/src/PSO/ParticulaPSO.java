@@ -1,6 +1,10 @@
 package PSO;
 
 import Modelo.Beneficiario;
+import Modelo.Beneficio;
+import Modelo.BloqueHorario;
+import Modelo.Calendario;
+import Modelo.Cita;
 import Modelo.Distribuidora;
 import Modelo.LocalAtencion;
 import Utils.Constantes;
@@ -31,6 +35,33 @@ public class ParticulaPSO {
     // Fila : ID de LocalAtencion
     // Columna : ID de BloqueHorario de 30 minutos
     // Celda : ID de Beneficiario
+    
+    public Calendario convertirACalendario(Beneficio bono){
+        Calendario Cal = new Calendario();
+        Cal.setBeneficio(bono);
+        List<Cita> lista = new ArrayList<>();
+        
+        for(Integer idBenef : asignaciones.keySet()){
+            Cita C = new Cita();
+            C.setBeneficiario(algoritmo.getBeneficiario(idBenef));
+            BloqueHorario BH = new BloqueHorario();
+            BH.setIdBloqueHorario(0);
+            Integer hashInicio = asignaciones.get(idBenef).get(1);
+            LocalDateTime inicioBH = inicios.get(hashInicio);
+            LocalDateTime finBH = inicioBH.plus(Constantes.tiempoAtencion);
+            BH.setInicio( inicioBH );
+            BH.setFin( finBH );
+            BH.setLocal( algoritmo.getLocalAtencion( asignaciones.get(idBenef).get(0) ) );
+            C.setBeneficiario( algoritmo.getBeneficiario(idBenef) );
+            C.setHorario(BH);
+            
+            lista.add(C);
+        }
+        
+        Cal.setCitas(lista);
+        
+        return Cal;
+    }
     
     public ParticulaPSO(List<Beneficiario> beneficiarios, 
             List<LocalAtencion> locales, AlgoritmoPSO algoritmo){
@@ -195,5 +226,11 @@ public class ParticulaPSO {
             Integer idLocal = valoresAsignados.get(0);
             Integer hashBloque = valoresAsignados.get(1);
         }
+    }
+    
+    public double evaluar(Beneficio bono){
+        Calendario C = this.convertirACalendario(bono);
+        C.actualizarCantidadBeneficiariosBloquesHorarios(locales);
+        return C.evaluarCalendario(locales, beneficiarios);
     }
 }

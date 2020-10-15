@@ -102,21 +102,21 @@ public class Individuo {
             
             Cita citaCromosoma = new Cita();
             
-            citaCromosoma.beneficiario = new Beneficiario();
+            citaCromosoma.setBeneficiario(new Beneficiario());
             
-            citaCromosoma.beneficiario.setIdBeneficiario(cromosoma.get(indicePropiedadCita).valor);
-            
-            indicePropiedadCita++;
-            
-            citaCromosoma.horario = new BloqueHorario();
-            
-            citaCromosoma.horario.local = new LocalAtencion();
-            
-            citaCromosoma.horario.local.setIdLocalAtencion(cromosoma.get(indicePropiedadCita).valor);
+            citaCromosoma.getBeneficiario().setIdBeneficiario(cromosoma.get(indicePropiedadCita).valor);
             
             indicePropiedadCita++;
             
-            citaCromosoma.horario.setIdBloqueHorario(cromosoma.get(indicePropiedadCita).valor);
+            citaCromosoma.setHorario(new BloqueHorario());
+            
+            citaCromosoma.horario.setLocal(new LocalAtencion());
+            
+            citaCromosoma.getHorario().getLocal().setIdLocalAtencion(cromosoma.get(indicePropiedadCita).valor);
+            
+            indicePropiedadCita++;
+            
+            citaCromosoma.getHorario().setIdBloqueHorario(cromosoma.get(indicePropiedadCita).valor);
             
             citasCromosoma.add(citaCromosoma);
             

@@ -16,13 +16,41 @@ public class Cita {
     public Beneficiario beneficiario;
     public ESTADO_CITA estado;
     
+    public Cita(){
+        estado = ESTADO_CITA.POR_ATENDER;
+    }
+
+    public BloqueHorario getHorario() {
+        return horario;
+    }
+
+    public void setHorario(BloqueHorario horario) {
+        this.horario = horario;
+    }
+
+    public Beneficiario getBeneficiario() {
+        return beneficiario;
+    }
+
+    public void setBeneficiario(Beneficiario beneficiario) {
+        this.beneficiario = beneficiario;
+    }
+
+    public ESTADO_CITA getEstado() {
+        return estado;
+    }
+
+    public void setEstado(ESTADO_CITA estado) {
+        this.estado = estado;
+    }
+    
     private LocalAtencion obtenerLocalDeAtencionCita(List<LocalAtencion> localesDeAtencionDisponibles){
     
         LocalAtencion localDeAtencionCita = null;
         
         for (LocalAtencion localDeAtencionDisponible : localesDeAtencionDisponibles){
         
-            if (horario.local.getIdLocalAtencion() == localDeAtencionDisponible.getIdLocalAtencion()){
+            if (getHorario().getLocal().getIdLocalAtencion() == localDeAtencionDisponible.getIdLocalAtencion()){
             
                 localDeAtencionCita = localDeAtencionDisponible;
                 
@@ -41,7 +69,7 @@ public class Cita {
         
         for (Beneficiario beneficiarioAtender : beneficiariosAtender){
         
-            if (beneficiario.getIdBeneficiario() == beneficiarioAtender.getIdBeneficiario()){
+            if (getBeneficiario().getIdBeneficiario() == beneficiarioAtender.getIdBeneficiario()){
             
                 beneficiarioCita = beneficiarioAtender;
                 
@@ -103,7 +131,7 @@ public class Cita {
         
         Beneficiario beneficiarioCita = obtenerBeneficiarioCita(beneficiariosAtender);
         
-        puntajeEnContra += obtenerGradoAglomeracion(horario, localDeAtencionCita);
+        puntajeEnContra += obtenerGradoAglomeracion(getHorario(), localDeAtencionCita);
         
         return puntajeEnContra;
         
