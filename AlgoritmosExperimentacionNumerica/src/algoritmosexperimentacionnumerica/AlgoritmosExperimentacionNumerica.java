@@ -60,7 +60,7 @@ public class AlgoritmosExperimentacionNumerica {
         Padron personas = new Padron("Familias afectas economicamente", "padron_prueba.txt",peru);
         
         // Con la informacion construimos el beneficio creara los bloques de horarios posibles
-        Beneficio bono = new Beneficio("Bono Experimentacion", banco, personas, LocalDate.of(2020,9,10));
+        Beneficio bono = new Beneficio("Bono Experimentacion", banco, personas, LocalDate.of(2020,10,15));
         
         Integer numBucles = 500;
         Integer numParticulas = 30;
@@ -70,7 +70,7 @@ public class AlgoritmosExperimentacionNumerica {
         Double pesoGlobal = 0.55;
         
         AlgoritmoPSO algPSO = new AlgoritmoPSO(bono, LocalDate.of(2020,9,10),1);
-        Calendario calPSO = algPSO.ejecutarPSOv2(numBucles, numParticulas, aleatorizador, inercia, pesoLocal, pesoGlobal);
+        //Calendario calPSO = algPSO.ejecutarPSOv2(numBucles, numParticulas, aleatorizador, inercia, pesoLocal, pesoGlobal);
         
         int tamanoPoblacion = 10;
         int numeroGeneraciones = 50;

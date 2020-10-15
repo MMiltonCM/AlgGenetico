@@ -83,9 +83,9 @@ public class Calendario {
         boolean esFactible = true;
         
         for (Cita citaNueva : citas){
-        
+
             esFactible = (citaNueva.getHorario().getNumeroBeneficiariosAsignados() <= citaNueva.getHorario().getLocal().getCapacidad());
-            
+
             if (!esFactible)
                 
                 break;
