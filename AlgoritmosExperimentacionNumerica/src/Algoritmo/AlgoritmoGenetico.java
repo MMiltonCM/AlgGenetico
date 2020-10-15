@@ -21,9 +21,9 @@ public class AlgoritmoGenetico {
         this.solucion = new Solucion(bono);
     }
     
-    public Calendario ejecutar(){
+    public Calendario ejecutar(int tamanoPoblacion, int numeroGeneraciones){
         // Iniciar contador de tiempo
-        Calendario cal = solucion.Distribuir_Citas();
+        Calendario cal = solucion.Distribuir_Citas(tamanoPoblacion, numeroGeneraciones);
         // Obtener el score de la FO
         return cal;
     }
