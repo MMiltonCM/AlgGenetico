@@ -53,9 +53,6 @@ public class AlgoritmosExperimentacionNumerica {
         AlgoritmoPSO alg = new AlgoritmoPSO(bonoExp, fechaInicio,1); //tercer argumento son dias
         alg.ejecutar(); */
         
-        
-        
-        
         // Primero crearemos la empresa que distribuye el beneficio
         Distribuidora banco = new Distribuidora("Banco Exp", "agencias.txt",peru);
         
@@ -65,10 +62,14 @@ public class AlgoritmosExperimentacionNumerica {
         // Con la informacion construimos el beneficio creara los bloques de horarios posibles
         Beneficio bono = new Beneficio("Bono Experimentacion", banco, personas, LocalDate.of(2020,9,10));
         
+        Integer numBucles = 200;
+        Integer numVecindades = 5;
+        Integer numVecinos = 3;
+        Double prob = 1.0;
         
-        
-        AlgoritmoPSO algPSO = new AlgoritmoPSO(bono, LocalDate.of(2020,9,10),30);
-        algPSO.ejecutar();
+        AlgoritmoPSO algPSO = new AlgoritmoPSO(bono, LocalDate.of(2020,9,10),2);
+        //algPSO.ejecutar();
+        Calendario calPSO = algPSO.ejecutarPSO(numBucles, numVecindades, numVecinos, prob);
         
         int tamanoPoblacion = 10;
         int numeroGeneraciones = 50;
@@ -80,7 +81,7 @@ public class AlgoritmosExperimentacionNumerica {
         // Algoritmo 2
         
         // Imprimir metricas de algoritmo
-        Printer.ReporteEstadisticas(AG, calGenetico); 
+        Printer.ReporteEstadisticas(AG, calGenetico);
         
         // METRICAS: CUANDO ES LA ULTIMA CITA ASIGNADA
         // LA SUMA TOTAL DE TIEMPOS DESDE EL INICIO HASTA LA CITA

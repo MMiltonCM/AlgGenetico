@@ -83,7 +83,7 @@ public class AlgoritmoPSO {
             ParticulaPSO ppso1 = new ParticulaPSO(beneficiarios, locales, this, 
                     fechaInicio, dias);
             ppso1.inicializarAleatoriamente();
-            ParticulaPSO ppso2 = ppso1.transicion();
+            ParticulaPSO ppso2 = ppso1.transicion(1.0);
             Integer j = i;
             LPSO.add(ppso1);
             System.out.print("Se ha creado la particula " + ((Integer)(2*i)).toString() + "\n");
@@ -107,15 +107,15 @@ public class AlgoritmoPSO {
         System.out.print("========================\n");
     }
     
-    public void ejecutarPSO(){
-        
-        Integer limite = 100;
-        Integer numVecindades = 20;
-        Integer numVecinos = 5;
+    public Calendario ejecutarPSO(Integer limite, Integer numVecindades, 
+            Integer numVecinos, Double prob){
         
         List<ParticulaPSO> LPSO = new ArrayList<>();
-        for(Integer i = 0; i<numVecindades; i++)
-            LPSO.add(new ParticulaPSO(beneficiarios, locales, this, fechaInicio, dias));
+        for(Integer i = 0; i<numVecindades; i++){
+            ParticulaPSO PPSO = new ParticulaPSO(beneficiarios, locales, this, fechaInicio, dias);
+            PPSO.inicializarAleatoriamente();
+            LPSO.add(PPSO);
+        }
         
         imprimirParticulas(LPSO);
         
@@ -129,7 +129,7 @@ public class AlgoritmoPSO {
                 Double mejorFitLocal = mejorPartLocal.evaluar(bono);
                 
                 for(Integer k = 0; k<numVecinos; k++){
-                    ParticulaPSO vecinoK = vecinoBase.transicion();
+                    ParticulaPSO vecinoK = vecinoBase.transicion(prob);
                     Double fitVecinoK = vecinoK.evaluar(bono);
                     if (mejorFitLocal < fitVecinoK){
                         mejorPartLocal = vecinoK;
@@ -153,5 +153,6 @@ public class AlgoritmoPSO {
             }
         }
         
+        return mejorGlobal.convertirACalendario(bono);
     }
 }

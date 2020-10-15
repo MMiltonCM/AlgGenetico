@@ -185,13 +185,17 @@ public class ParticulaPSO {
         }
     }
     
-    public ParticulaPSO transicion(){
+    public ParticulaPSO transicion(Double prob){
         ParticulaPSO vecino = new ParticulaPSO(beneficiarios, locales, 
                 algoritmo, diaInicio, dias);
         vecino.inicializarAleatoriamente();
         Random r = new Random();
+        
         List<Integer> beneficiariosV = new ArrayList<>(vecino.asignaciones.keySet());
         for( Integer idbenef : beneficiariosV){
+            
+            Double num = r.nextDouble();
+            if (num > prob) continue;
             
             Integer localActual = vecino.asignaciones.get(idbenef).get(0);
             Integer bloqueActual = vecino.asignaciones.get(idbenef).get(1);
