@@ -70,7 +70,7 @@ public class AlgoritmosExperimentacionNumerica {
         Double pesoGlobal = 0.55;
         
         AlgoritmoPSO algPSO = new AlgoritmoPSO(bono, LocalDate.of(2020,9,10),1);
-        Calendario calPSO = algPSO.ejecutarPSOv2(numBucles, numParticulas, aleatorizador, inercia, pesoLocal, pesoGlobal);
+        //Calendario calPSO = algPSO.ejecutarPSOv2(numBucles, numParticulas, aleatorizador, inercia, pesoLocal, pesoGlobal);
         
         int tamanoPoblacion = 10;
         int numeroGeneraciones = 50;

@@ -155,8 +155,6 @@ public class Individuo implements Comparable {
             
             citaCromosoma.setHorario(new BloqueHorario());
             
-            citaCromosoma.getHorario().getLocal().setIdLocalAtencion(cromosoma.get(indicePropiedadCita).valor);
-            
             citaCromosoma.getHorario().setLocal(tablaBloquesHorarios.get(citaCromosoma.getHorario().getIdBloqueHorario()).getLocal());
             
             citasCromosoma.add(citaCromosoma);

@@ -10,6 +10,7 @@ import Modelo.Calendario;
 import Modelo.LocalAtencion;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,6 +26,7 @@ public class Solucion {
     
     public Solucion(Beneficio bono){
         this.bono = bono;
+        this.tablaBloquesHorarios = new HashMap<>();
     }
     
     public void crearTablaBloqueHorarios(List<LocalAtencion> localesDeAtencionDisponibles){
@@ -32,9 +34,8 @@ public class Solucion {
         for (LocalAtencion localAtencionDisponible : localesDeAtencionDisponibles){
         
             for (BloqueHorario bloqueHorarioLocalDeAtencion : localAtencionDisponible.bloquesHorarios){
-            
+
                 tablaBloquesHorarios.put(bloqueHorarioLocalDeAtencion.getIdBloqueHorario(), bloqueHorarioLocalDeAtencion);
-                
             }
             
         }
@@ -63,8 +64,6 @@ public class Solucion {
                 Gen persona = new Gen("IDENTIFICADOR",b.getIdBeneficiario());
                 d.agregarGenACromosoma(persona);
                 LocalAtencion l = locales.get((int)(Math.random()*maxLocales));
-                Gen loc = new Gen("VARIABLE", l.getIdLocalAtencion());
-                d.agregarGenACromosoma(loc);
                 int maxbh = l.bloquesHorarios.size();
                 BloqueHorario bh = l.bloquesHorarios.get((int)(Math.random()*maxbh));
                 Gen hor = new Gen("VARIABLE", bh.getIdBloqueHorario());
