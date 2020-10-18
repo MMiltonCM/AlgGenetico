@@ -10,6 +10,7 @@ import Modelo.Cita;
 import Modelo.LocalAtencion;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -100,6 +101,7 @@ public class Individuo implements Comparable {
         Random random = new Random();
         
         List<Integer> cortes = random.ints(0, numGenes).distinct().limit(numPuntosCorte).boxed().collect(Collectors.toCollection(ArrayList::new));
+        Collections.sort(cortes);
         
         List<Gen> nuevoCromosoma1Parte1 = cromosoma.subList(0, cortes.get(0));
         List<Gen> nuevoCromosoma1Parte2 = cromosoma.subList(cortes.get(0), cortes.get(1));

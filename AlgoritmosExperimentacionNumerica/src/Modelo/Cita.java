@@ -50,7 +50,7 @@ public class Cita {
         
         for (LocalAtencion localDeAtencionDisponible : localesDeAtencionDisponibles){
         
-            if (getHorario().getLocal().getIdLocalAtencion() == localDeAtencionDisponible.getIdLocalAtencion()){
+            if (getHorario().getLocal().getIdLocalAtencion().intValue() == localDeAtencionDisponible.getIdLocalAtencion().intValue()){
             
                 localDeAtencionCita = localDeAtencionDisponible;
                 
@@ -69,7 +69,7 @@ public class Cita {
         
         for (Beneficiario beneficiarioAtender : beneficiariosAtender){
         
-            if (getBeneficiario().getIdBeneficiario() == beneficiarioAtender.getIdBeneficiario()){
+            if (beneficiario.getIdBeneficiario().intValue() == beneficiarioAtender.getIdBeneficiario().intValue()){
             
                 beneficiarioCita = beneficiarioAtender;
                 

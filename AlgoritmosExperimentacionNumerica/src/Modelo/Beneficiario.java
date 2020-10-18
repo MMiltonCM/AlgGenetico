@@ -4,7 +4,7 @@
 package Modelo;
 
 public class Beneficiario {
-    public Integer idBeneficiario;
+    public int idBeneficiario;
     public String DNI;
     public boolean flagDiscapacidad;
     private boolean flagAdultoMayor;
