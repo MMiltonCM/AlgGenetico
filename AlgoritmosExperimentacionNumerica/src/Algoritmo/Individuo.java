@@ -11,17 +11,18 @@ import Modelo.LocalAtencion;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public class Individuo implements Comparable {
-    private static final int CANTIDAD_CROMOSOMAS_DEFINEN_OBJETO = 3;
+    private static final int CANTIDAD_CROMOSOMAS_DEFINEN_OBJETO = 2;
     private double fitness;
     private List<Gen> cromosoma;
     
     public Individuo(){
-        fitness = 0.0;
+        fitness = Double.MIN_VALUE;
         cromosoma = new ArrayList<Gen>();
     }
 
@@ -134,7 +135,7 @@ public class Individuo implements Comparable {
         
     }
     
-    private Calendario construirCalendarioDesdeCromosoma(){
+    private Calendario construirCalendarioDesdeCromosoma(Map<Integer, BloqueHorario> tablaBloquesHorarios){
         Calendario calendarioConstruido = new Calendario();
         
         List<Cita> citasCromosoma = new ArrayList<Cita>();
@@ -154,13 +155,9 @@ public class Individuo implements Comparable {
             
             citaCromosoma.setHorario(new BloqueHorario());
             
-            citaCromosoma.horario.setLocal(new LocalAtencion());
-            
             citaCromosoma.getHorario().getLocal().setIdLocalAtencion(cromosoma.get(indicePropiedadCita).valor);
             
-            indicePropiedadCita++;
-            
-            citaCromosoma.getHorario().setIdBloqueHorario(cromosoma.get(indicePropiedadCita).valor);
+            citaCromosoma.getHorario().setLocal(tablaBloquesHorarios.get(citaCromosoma.getHorario().getIdBloqueHorario()).getLocal());
             
             citasCromosoma.add(citaCromosoma);
             
@@ -171,17 +168,17 @@ public class Individuo implements Comparable {
         return calendarioConstruido;
     }
     
-    public void evaluarIndividuo(List<LocalAtencion> localesDeAtencionDisponibles, List<Beneficiario> beneficiariosAtender){
-        Calendario calendarioConstruido = construirCalendarioDesdeCromosoma();
+    public void evaluarIndividuo(List<LocalAtencion> localesDeAtencionDisponibles, List<Beneficiario> beneficiariosAtender, Map<Integer, BloqueHorario> tablaBloquesHorarios){
+        Calendario calendarioConstruido = construirCalendarioDesdeCromosoma(tablaBloquesHorarios);
         
         calendarioConstruido.actualizarCantidadBeneficiariosBloquesHorarios(localesDeAtencionDisponibles);
         
         fitness = calendarioConstruido.evaluarCalendario(localesDeAtencionDisponibles, beneficiariosAtender);
     }
     
-    public Calendario obtenerCalendario(){
+    public Calendario obtenerCalendario(Map<Integer, BloqueHorario> tablaBloquesHorarios){
     
-        return construirCalendarioDesdeCromosoma();
+        return construirCalendarioDesdeCromosoma(tablaBloquesHorarios);
         
     }
 

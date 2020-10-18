@@ -18,6 +18,7 @@ import java.util.stream.IntStream;
 public class Solucion {
     private final Beneficio bono;
     private Map<Beneficiario, Individuo> padron_algoritmo;
+    private Map<Integer, BloqueHorario> tablaBloquesHorarios;
     
     private final int TAMANO_TORNEO = 3;
     private final int NUM_PUNTOS_CORTE_CRUZAMIENTO_MULTIPUNTO = 3;
@@ -26,11 +27,25 @@ public class Solucion {
         this.bono = bono;
     }
     
+    public void crearTablaBloqueHorarios(List<LocalAtencion> localesDeAtencionDisponibles){
+    
+        for (LocalAtencion localAtencionDisponible : localesDeAtencionDisponibles){
+        
+            for (BloqueHorario bloqueHorarioLocalDeAtencion : localAtencionDisponible.bloquesHorarios){
+            
+                tablaBloquesHorarios.put(bloqueHorarioLocalDeAtencion.getIdBloqueHorario(), bloqueHorarioLocalDeAtencion);
+                
+            }
+            
+        }
+        
+    }
+    
     private void evaluarPoblacion(List<Individuo> poblacion, List<LocalAtencion> localesDeAtencionDisponibles, List<Beneficiario> beneficiariosAtender){
     
         for (Individuo individuoPoblacion : poblacion){
         
-            individuoPoblacion.evaluarIndividuo(localesDeAtencionDisponibles, beneficiariosAtender);
+            individuoPoblacion.evaluarIndividuo(localesDeAtencionDisponibles, beneficiariosAtender, tablaBloquesHorarios);
             
         }
         
@@ -265,6 +280,8 @@ public class Solucion {
         List<LocalAtencion> localesDeAtencionDisponibles = bono.getDist().getAgencias();
         List<Beneficiario> beneficiariosAtender = bono.getPad().getBeneficiarios();
         
+        crearTablaBloqueHorarios(localesDeAtencionDisponibles);
+        
         // Crear citas de los bloquehorario de la Distribuidora 
         
         // Crear una poblacion con los beneficiario del padron. Asignar cita aleatoria
@@ -310,7 +327,7 @@ public class Solucion {
         
         //TODO Realizar reporte final
         
-        Calendario cal = mejorIndividuo.obtenerCalendario();
+        Calendario cal = mejorIndividuo.obtenerCalendario(tablaBloquesHorarios);
         
         return cal;
     }
