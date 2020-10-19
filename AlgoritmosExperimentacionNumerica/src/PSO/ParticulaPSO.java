@@ -157,7 +157,7 @@ public class ParticulaPSO {
             //BA = (Integer)itBloqueActual.next();
             
             if (L.size() < Constantes.capacidad){
-                L.add(B.idBeneficiario);
+                L.add(B.getIdBeneficiario());
                 List<Integer> asig = new ArrayList<>();
                 asig.add(LA);
                 asig.add(BA);
