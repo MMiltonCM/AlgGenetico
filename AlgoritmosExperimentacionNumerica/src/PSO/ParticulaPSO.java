@@ -29,6 +29,9 @@ public class ParticulaPSO {
     private LocalDate diaInicio;
     private Integer dias;
     
+    private Boolean evaluado = false;
+    private Double fitness = 0.0;
+    
     private LinkedHashMap<Integer, LinkedHashMap<Integer, List<Integer> > > matriz;
     private LinkedHashMap<Integer, LocalDateTime> inicios;
     private LinkedHashMap<Integer, List<Integer>> asignaciones; //Primer elemento
@@ -73,6 +76,7 @@ public class ParticulaPSO {
         this.beneficiarios = beneficiarios;
         this.locales = locales;
         this.algoritmo = algoritmo;
+        this.evaluado = false;
         
         matriz = new LinkedHashMap<Integer, LinkedHashMap<Integer, List<Integer> > >();
         inicios = new LinkedHashMap<Integer, LocalDateTime> ();
@@ -162,6 +166,7 @@ public class ParticulaPSO {
                 asig.add(LA);
                 asig.add(BA);
                 asignaciones.put(B.idBeneficiario, asig);
+                //System.gc();
                 continue;
             }
             //¿Que pasa si se ha llenado un horario de un local?
@@ -293,8 +298,15 @@ public class ParticulaPSO {
     }
     
     public double evaluar(Beneficio bono){
+        if (this.evaluado == true)
+            return this.fitness;
+        
         Calendario C = this.convertirACalendario(bono);
         C.actualizarCantidadBeneficiariosBloquesHorarios(locales);
-        return C.evaluarCalendario(locales, beneficiarios);
+        Double fit = C.evaluarCalendario(locales, beneficiarios);
+        
+        this.evaluado = true;
+        this.fitness = fit;
+        return fit;
     }
 }

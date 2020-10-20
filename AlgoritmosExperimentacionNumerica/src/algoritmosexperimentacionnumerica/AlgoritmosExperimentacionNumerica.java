@@ -57,20 +57,22 @@ public class AlgoritmosExperimentacionNumerica {
         Distribuidora banco = new Distribuidora("Banco Exp", "agencias.txt",peru);
         
         // Ahora registramos un padron donde estaran los beneficiarios
-        Padron personas = new Padron("Familias afectas economicamente", "padron_prueba.txt",peru);
+        Integer limitePersonas = 800;
+        Padron personas = new Padron("Familias afectas economicamente", "padron_final.txt",peru,limitePersonas);
         
         // Con la informacion construimos el beneficio creara los bloques de horarios posibles
         Beneficio bono = new Beneficio("Bono Experimentacion", banco, personas, LocalDate.of(2020,10,15));
         
-        Integer numBucles = 500;
-        Integer numParticulas = 30;
-        Double aleatorizador = 0.8;
+        Integer numBucles = 30;
+        Integer numParticulas = 10;
+        Double aleatorizador = 1.0;
         Double inercia = 0.1;
-        Double pesoLocal = 0.35;
-        Double pesoGlobal = 0.55;
+        Double pesoLocal = 0.25;
+        Double pesoGlobal = 0.65;
         
-        AlgoritmoPSO algPSO = new AlgoritmoPSO(bono, LocalDate.of(2020,9,10),1);
+        AlgoritmoPSO algPSO = new AlgoritmoPSO(bono, LocalDate.of(2020,9,10),10);
         Calendario calPSO = algPSO.ejecutarPSOv2(numBucles, numParticulas, aleatorizador, inercia, pesoLocal, pesoGlobal);
+        Double x = calPSO.evaluarCalendario(banco.getAgencias() , personas.getBeneficiarios());
         
         int tamanoPoblacion = 10;
         int numeroGeneraciones = 50;
@@ -78,11 +80,14 @@ public class AlgoritmosExperimentacionNumerica {
         // Despues le brindamos esta informacion a nuestros algoritmos para que nos devuelvan un Calendario de citas
         AlgoritmoGenetico AG = new AlgoritmoGenetico(bono);
         Calendario calGenetico = AG.ejecutar(tamanoPoblacion, numeroGeneraciones);
+        Double y = calGenetico.evaluarCalendario(banco.getAgencias() , personas.getBeneficiarios());
         
         // Algoritmo 2
         
         // Imprimir metricas de algoritmo
         Printer.ReporteEstadisticas(AG, calGenetico);
+        
+        System.out.print("Fitness PSO / genético : " + x + " / " + y);
         
         // METRICAS: CUANDO ES LA ULTIMA CITA ASIGNADA
         // LA SUMA TOTAL DE TIEMPOS DESDE EL INICIO HASTA LA CITA

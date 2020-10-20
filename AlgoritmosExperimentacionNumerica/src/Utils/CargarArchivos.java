@@ -34,11 +34,13 @@ public class CargarArchivos {
         return locales;
     }
 
-    public static List<Beneficiario> CargarPadron(String archivoPadron,Pais p) {
+    public static List<Beneficiario> CargarPadron(String archivoPadron,Pais p,
+            Integer limite) {
         List<List<String>> Data = Leer(archivoPadron);
         List<Beneficiario> padron = new ArrayList<>();
         int num = 0;
         for(List<String> linea : Data){
+            if (num >= limite) break;
             Ubigeo u = p.buscarUbigeo(linea.get(1)+linea.get(2)+linea.get(3));
             Beneficiario b = new Beneficiario(num, String.valueOf(num), 
                     "1".equals(linea.get(6)), "1".equals(linea.get(7)), u);
