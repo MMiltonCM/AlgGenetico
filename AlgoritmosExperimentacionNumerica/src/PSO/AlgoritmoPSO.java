@@ -163,7 +163,7 @@ public class AlgoritmoPSO {
     
     public Calendario ejecutarPSOv2(Integer limite, 
             Integer numParticulas, Double aleatorizador, Double inercia, Double pesoLocal, 
-            Double pesoGlobal){
+            Double pesoGlobal, Boolean verbose){
         
         List<Double> probs = new ArrayList<>();
         //probs.add(1.0 - inercia - pesoLocal - pesoGlobal);
@@ -193,7 +193,8 @@ public class AlgoritmoPSO {
             partInercial.add(aleatorio);
         }
         
-        this.imprimirParticulas(poblacion, global, 0);
+        if (verbose)
+            this.imprimirParticulas(poblacion, global, 0);
         
         for(Integer i = 0; i<limite; i++){
             
@@ -233,7 +234,8 @@ public class AlgoritmoPSO {
                 partInercial.set(j, nueva.transicion(aleatorizador));
             }
             
-            this.imprimirParticulas(poblacion, global, i+1);
+            if (verbose)
+                this.imprimirParticulas(poblacion, global, i+1);
         }
         
         return global.convertirACalendario(bono);

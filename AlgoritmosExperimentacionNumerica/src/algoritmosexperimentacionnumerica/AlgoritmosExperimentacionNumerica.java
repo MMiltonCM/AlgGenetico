@@ -9,6 +9,7 @@ import Algoritmo.AlgoritmoGenetico;
 import Modelo.Beneficiario;
 import Modelo.Beneficio;
 import Modelo.Calendario;
+import Modelo.Cita;
 import Modelo.Distribuidora;
 import Modelo.LocalAtencion;
 import Modelo.Padron;
@@ -16,6 +17,7 @@ import Modelo.Pais;
 import PSO.AlgoritmoPSO;
 import PSO.ParticulaPSO;
 import Utils.CargarArchivos;
+import Utils.Constantes;
 import Utils.Hora;
 import Utils.Printer;
 import java.time.Duration;
@@ -31,48 +33,49 @@ import java.util.List;
  * @author Diego Paredes
  */
 public class AlgoritmosExperimentacionNumerica {
-
-    public static void main(String[] args) {
-        // Data comun a los archivos. Ubicaciones geograficas del peru
-        Pais peru = new Pais();
-        CargarArchivos.CargarUbigeos("ubigeos.txt", peru);
-
-        // NO BORRAR : EXPERIMENTO 
-        /*
-        Distribuidora dist = new Distribuidora("", "", peru);
-        List<LocalAtencion> L = new ArrayList<>();
-        for(Integer i = 0; i<3; i++) //En la data son 551, pero aqui cambio a gusto
-            L.add( new LocalAtencion(i, 1, 1, null, 1, LocalTime.of(8, 0), LocalTime.of(19, 0)) );
-        List<Beneficiario> LB = new ArrayList<>();
-        for(Integer i = 0; i<7; i++)
-            LB.add((new Beneficiario(i)));
-        dist.setAgencias(L);
-        LocalDate fechaInicio = LocalDate.of(2020, 10, 12);
-        Padron P = new Padron("Padron Meramente Experimental", LB);
-        Beneficio bonoExp = new Beneficio("Bono Experimentacion", dist, P, fechaInicio);
-        AlgoritmoPSO alg = new AlgoritmoPSO(bonoExp, fechaInicio,1); //tercer argumento son dias
-        alg.ejecutar(); */
-        
-        // Primero crearemos la empresa que distribuye el beneficio
-        Distribuidora banco = new Distribuidora("Banco Exp", "agencias.txt",peru);
-        
-        // Ahora registramos un padron donde estaran los beneficiarios
-        Integer limitePersonas = 800;
-        Padron personas = new Padron("Familias afectas economicamente", "padron_final.txt",peru,limitePersonas);
-        
-        // Con la informacion construimos el beneficio creara los bloques de horarios posibles
-        Beneficio bono = new Beneficio("Bono Experimentacion", banco, personas, LocalDate.of(2020,10,15));
-        
-        Integer numBucles = 30;
+    
+    public static Double ejecutarPSO(Distribuidora banco,
+            Beneficio bono, Padron personas, Integer capacidad, 
+            Integer numAgencias){
+        Integer numBucles = 50;
         Integer numParticulas = 10;
         Double aleatorizador = 1.0;
         Double inercia = 0.1;
         Double pesoLocal = 0.25;
         Double pesoGlobal = 0.65;
         
-        AlgoritmoPSO algPSO = new AlgoritmoPSO(bono, LocalDate.of(2020,9,10),10);
-        Calendario calPSO = algPSO.ejecutarPSOv2(numBucles, numParticulas, aleatorizador, inercia, pesoLocal, pesoGlobal);
+        Integer numDias = Constantes.numDias;
+        
+        AlgoritmoPSO algPSO = new AlgoritmoPSO(bono, LocalDate.of(2020,9,10),numDias);
+        Calendario calPSO = algPSO.ejecutarPSOv2(numBucles, numParticulas, 
+                aleatorizador, inercia, pesoLocal, pesoGlobal, true);
         Double x = calPSO.evaluarCalendario(banco.getAgencias() , personas.getBeneficiarios());
+        return x;
+    }
+
+    public static void main(String[] args) {
+        // Data comun a los archivos. Ubicaciones geograficas del peru
+        Pais peru = new Pais();
+        CargarArchivos.CargarUbigeos("ubigeos.txt", peru);
+        
+        // Primero crearemos la empresa que distribuye el beneficio
+        Distribuidora banco = new Distribuidora("Banco Exp", "agencias.txt",peru);
+        
+        // Ahora registramos un padron donde estaran los beneficiarios
+        Integer limitePersonas = 2000;
+        Padron personas = new Padron("Familias afectadas economicamente", "padron_final.txt",peru,limitePersonas);
+        
+        // Con la informacion construimos el beneficio creara los bloques de horarios posibles
+        Beneficio bono = new Beneficio("Bono Experimentacion", banco, personas, LocalDate.of(2020,10,15));
+        
+        
+        //PSO
+        Integer capacidad = 20;
+        Integer numAgencias = 40;
+        
+        Double x = AlgoritmosExperimentacionNumerica.ejecutarPSO(banco, bono, personas,
+                capacidad, numAgencias);
+        
         
         int tamanoPoblacion = 10;
         int numeroGeneraciones = 50;
@@ -82,12 +85,18 @@ public class AlgoritmosExperimentacionNumerica {
         Calendario calGenetico = AG.ejecutar(tamanoPoblacion, numeroGeneraciones);
         Double y = calGenetico.evaluarCalendario(banco.getAgencias() , personas.getBeneficiarios());
         
+        /*
+        for(Cita cita : calGenetico.getCitas()){
+            System.out.print("" + cita.getHorario().getInicio() + " - " + 
+                    cita.getHorario().getFin());
+        }
+        */
         // Algoritmo 2
         
         // Imprimir metricas de algoritmo
         Printer.ReporteEstadisticas(AG, calGenetico);
         
-        System.out.print("Fitness PSO / genético : " + x + " / " + y);
+        System.out.print("\n\n\nFitness PSO / genético : " + x + " / " + y + "\n");
         
         // METRICAS: CUANDO ES LA ULTIMA CITA ASIGNADA
         // LA SUMA TOTAL DE TIEMPOS DESDE EL INICIO HASTA LA CITA

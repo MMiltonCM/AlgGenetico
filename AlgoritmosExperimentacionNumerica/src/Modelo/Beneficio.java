@@ -30,6 +30,7 @@ public class Beneficio {
         int cant_bloques = (int)(pad.beneficiarios.size()/dist.getAgencias().size());
         for(LocalAtencion la : dist.getAgencias()){
             int bloques_dia = la.getNumeroBloques();
+            Constantes.numDias = (int)(cant_bloques/bloques_dia) + 1;
             for (int j=0; j <= (int)(cant_bloques/bloques_dia); j++){
                 for(int k=0; k < bloques_dia; k++){
                     LocalTime start = la.horaInicioAtencion.plus(

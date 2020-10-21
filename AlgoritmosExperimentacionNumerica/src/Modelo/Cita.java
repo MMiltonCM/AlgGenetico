@@ -113,7 +113,8 @@ public class Cita {
     
         double puntajeAFavor = 0.0;
         
-        LocalAtencion localDeAtencionCita = obtenerLocalDeAtencionCita(localesDeAtencionDisponibles);
+        //LocalAtencion localDeAtencionCita = obtenerLocalDeAtencionCita(localesDeAtencionDisponibles);
+        // comentado por unused
         
         Beneficiario beneficiarioCita = obtenerBeneficiarioCita(beneficiariosAtender);
         
