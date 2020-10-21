@@ -6,4 +6,5 @@ public class Constantes {
     public static Duration tiempoAtencion = Duration.ofMinutes(30); //30 minutos de atencion
     public static Integer capacidad = 20; //capacidad en tiempoAtencion para cada local
     public static Integer numDias = 10; //Valor default
+    public static Integer bloqueXDia = 18; //Valor default
 }

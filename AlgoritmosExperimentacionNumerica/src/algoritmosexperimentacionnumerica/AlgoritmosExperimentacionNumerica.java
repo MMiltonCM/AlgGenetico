@@ -37,30 +37,37 @@ public class AlgoritmosExperimentacionNumerica {
     public static Double ejecutarPSO(Distribuidora banco,
             Beneficio bono, Padron personas, Integer capacidad, 
             Integer numAgencias){
-        Integer numBucles = 50;
-        Integer numParticulas = 10;
+        Integer numBucles = 100;
+        Integer numParticulas = 50;
         Double aleatorizador = 1.0;
-        Double inercia = 0.1;
-        Double pesoLocal = 0.25;
+        Double inercia = 0.15;
+        Double pesoLocal = 0.2;
         Double pesoGlobal = 0.65;
         
         Integer numDias = Constantes.numDias;
         
-        AlgoritmoPSO algPSO = new AlgoritmoPSO(bono, LocalDate.of(2020,9,10),numDias);
+        AlgoritmoPSO algPSO = new AlgoritmoPSO(bono, LocalDate.of(2020,10,15),numDias);
         Calendario calPSO = algPSO.ejecutarPSOv2(numBucles, numParticulas, 
-                aleatorizador, inercia, pesoLocal, pesoGlobal, true);
+                aleatorizador, inercia, pesoLocal, pesoGlobal, false);
         Double x = calPSO.evaluarCalendario(banco.getAgencias() , personas.getBeneficiarios());
         return x;
     }
 
     public static void main(String[] args) {
         
-        Constantes.capacidad = 20;      //  FACTOR #1 {20 , 50}
-        Integer limitePersonas = 300;   //  FACTOR #2 {300 , 800}
-        Integer numAgencias = 40;       //  FACTOR #3 {40 , 80}
-        //                                  FACTOR #4 {PSO , Genetico}
-        Integer numBloquesAtencion = 5; //  FACTOR #5 {5 , 10}
+        Constantes.capacidad = 50;      //  FACTOR #1 {20 , 50}
+                                        //  Sin limite
         
+        Integer limitePersonas = 800;   //  FACTOR #2 {300 , 800}
+                                        //  Maximo es 1000000 (1 millon y algo mas)
+        
+        Integer numAgencias = 551;       //  FACTOR #3 {40 , 80}
+                                        //  Maximo es 551
+        
+        //                                  FACTOR #4 {PSO , Genetico}
+        
+        Constantes.bloqueXDia = -1;      //  FACTOR #5 {5 , 10}
+                                        //  Poner -1 para que funcione con valores leidos
         
         // Data comun a los archivos. Ubicaciones geograficas del peru
         Pais peru = new Pais();
@@ -80,10 +87,9 @@ public class AlgoritmosExperimentacionNumerica {
         
         
         //PSO
-        Integer capacidad = 20;
         
         Double x = AlgoritmosExperimentacionNumerica.ejecutarPSO(banco, bono, personas,
-                capacidad, numAgencias);
+                Constantes.capacidad, numAgencias);
         
         
         int tamanoPoblacion = 10;

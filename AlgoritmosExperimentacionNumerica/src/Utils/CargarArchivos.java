@@ -25,8 +25,12 @@ public class CargarArchivos {
             String[] h_aux = linea.get(6).split(":");
             LocalTime inicio = LocalTime.of(Integer.parseInt(h_aux[0]),
                     Integer.parseInt(h_aux[1].substring(0, 2)));
-            LocalTime fin = LocalTime.of(Integer.parseInt(h_aux[1].substring(h_aux[1].length() - 2, h_aux[1].length())),
-                    Integer.parseInt(h_aux[2].substring(0, 2)));
+            LocalTime fin = null;
+            if (Constantes.bloqueXDia == -1)
+                fin = LocalTime.of(Integer.parseInt(h_aux[1].substring(h_aux[1].length() - 2, h_aux[1].length())),
+                        Integer.parseInt(h_aux[2].substring(0, 2)));
+            else
+                fin = inicio.plus(Constantes.tiempoAtencion.multipliedBy((long)Constantes.bloqueXDia));
             LocalAtencion la = new LocalAtencion(Integer.parseInt(linea.get(0)), Double.valueOf(u.latitud)/360, 
                 Double.valueOf(u.longitud)/360 , u.codigo, Constantes.capacidad, inicio, fin);
             locales.add(la);
