@@ -54,6 +54,14 @@ public class AlgoritmosExperimentacionNumerica {
     }
 
     public static void main(String[] args) {
+        
+        Constantes.capacidad = 20;      //  FACTOR #1 {20 , 50}
+        Integer limitePersonas = 300;   //  FACTOR #2 {300 , 800}
+        Integer numAgencias = 40;       //  FACTOR #3 {40 , 80
+        //                                  FACTOR #4 {PSO , Genetico}
+        Integer numBloquesAtencion = 5; //  FACTOR #5 {5 , 10}
+        
+        
         // Data comun a los archivos. Ubicaciones geograficas del peru
         Pais peru = new Pais();
         CargarArchivos.CargarUbigeos("ubigeos.txt", peru);
@@ -61,8 +69,10 @@ public class AlgoritmosExperimentacionNumerica {
         // Primero crearemos la empresa que distribuye el beneficio
         Distribuidora banco = new Distribuidora("Banco Exp", "agencias.txt",peru);
         
+        banco.setAgencias( banco.getAgencias().subList(0, numAgencias) );
+        
         // Ahora registramos un padron donde estaran los beneficiarios
-        Integer limitePersonas = 2000;
+        
         Padron personas = new Padron("Familias afectadas economicamente", "padron_final.txt",peru,limitePersonas);
         
         // Con la informacion construimos el beneficio creara los bloques de horarios posibles
@@ -71,7 +81,6 @@ public class AlgoritmosExperimentacionNumerica {
         
         //PSO
         Integer capacidad = 20;
-        Integer numAgencias = 40;
         
         Double x = AlgoritmosExperimentacionNumerica.ejecutarPSO(banco, bono, personas,
                 capacidad, numAgencias);
