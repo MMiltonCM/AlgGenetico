@@ -57,7 +57,7 @@ public class AlgoritmosExperimentacionNumerica {
         
         Constantes.capacidad = 20;      //  FACTOR #1 {20 , 50}
         Integer limitePersonas = 300;   //  FACTOR #2 {300 , 800}
-        Integer numAgencias = 40;       //  FACTOR #3 {40 , 80
+        Integer numAgencias = 40;       //  FACTOR #3 {40 , 80}
         //                                  FACTOR #4 {PSO , Genetico}
         Integer numBloquesAtencion = 5; //  FACTOR #5 {5 , 10}
         
