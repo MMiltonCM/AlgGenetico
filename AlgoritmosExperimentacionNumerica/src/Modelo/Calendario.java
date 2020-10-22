@@ -128,7 +128,7 @@ public class Calendario {
     
     public double evaluarCalendario(List<LocalAtencion> localesDeAtencionDisponibles, List<Beneficiario> beneficiariosAtender){
         
-        double resultadoEvaluacion;
+        double resultadoEvaluacion = 0.0;
         
         boolean esFactible = evaluarFactibilidadCalendario();
         
@@ -137,7 +137,9 @@ public class Calendario {
             double puntajeAFavor = obtenerPuntuacionAFavor(localesDeAtencionDisponibles, beneficiariosAtender);
         
             double puntajeEnContra = obtenerPuntuacionEnContra(localesDeAtencionDisponibles, beneficiariosAtender);
-        
+            
+            //double puntajeLejania = obtenerPuntuacionLejania(localesDeAtencionDisponibles, beneficiariosAtender);
+            
             resultadoEvaluacion = puntajeAFavor - puntajeEnContra;
         
         }

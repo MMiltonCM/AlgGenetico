@@ -3,6 +3,7 @@
  */
 package Modelo;
 
+import Utils.Coordenadas;
 import java.util.List;
 
 enum ESTADO_CITA{ATENDIDO, POR_ATENDER}
@@ -124,8 +125,37 @@ public class Cita {
         
     }
     
+    public double obtenerLejania(LocalAtencion local, 
+            Beneficiario beneficiario){
+    
+        double puntajeAFavor = 0.0;
+        
+        //LocalAtencion localDeAtencionCita = obtenerLocalDeAtencionCita(localesDeAtencionDisponibles);
+        // comentado por unused
+        
+        double local_long = local.getLongitud();
+        double local_lati = local.getLatitud();
+        
+        double bene_long = local_long;
+        double bene_lati = local_lati;
+                
+        try{
+            bene_long = beneficiario.ubigeo.longitud/3600;
+            bene_lati = beneficiario.ubigeo.latitud/3600;
+        }catch(Exception e){
+            return 0;
+        }
+                
+        double dif_long = local_long - bene_long;
+        double dif_lati = local_lati - bene_lati;
+        
+        return Math.sqrt( dif_long*dif_long + dif_lati*dif_lati );
+        
+    }
+    
     public double obtenerPuntuacionEnContra (List<LocalAtencion> localesDeAtencionDisponibles, List<Beneficiario> beneficiariosAtender){
     
+        
         double puntajeEnContra = 0.0;
         
         LocalAtencion localDeAtencionCita = obtenerLocalDeAtencionCita(localesDeAtencionDisponibles);
@@ -133,6 +163,8 @@ public class Cita {
         Beneficiario beneficiarioCita = obtenerBeneficiarioCita(beneficiariosAtender);
         
         puntajeEnContra += obtenerGradoAglomeracion(getHorario(), localDeAtencionCita);
+        
+        puntajeEnContra += obtenerLejania(localDeAtencionCita , beneficiarioCita);
         
         return puntajeEnContra;
         

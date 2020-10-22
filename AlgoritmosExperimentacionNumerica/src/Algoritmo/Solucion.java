@@ -326,7 +326,12 @@ public class Solucion {
         
         //TODO Realizar reporte final
         
+        //System.out.print("\nFit individuo : " + 
+        //        mejorIndividuo.getFitness());
+        
         Calendario cal = mejorIndividuo.obtenerCalendario(tablaBloquesHorarios);
+        
+        //System.out.print("\nFit calendario : " + cal.evaluarCalendario(localesDeAtencionDisponibles, beneficiariosAtender));
         
         return cal;
     }

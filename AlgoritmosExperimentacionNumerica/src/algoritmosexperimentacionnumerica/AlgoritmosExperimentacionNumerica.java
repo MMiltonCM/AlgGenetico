@@ -37,12 +37,12 @@ public class AlgoritmosExperimentacionNumerica {
     public static Double ejecutarPSO(Distribuidora banco,
             Beneficio bono, Padron personas, Integer capacidad, 
             Integer numAgencias){
-        Integer numBucles = 100;
-        Integer numParticulas = 50;
+        Integer numBucles = 20;
+        Integer numParticulas = 15;
         Double aleatorizador = 1.0;
-        Double inercia = 0.15;
-        Double pesoLocal = 0.2;
-        Double pesoGlobal = 0.65;
+        Double inercia = 0.1;
+        Double pesoLocal = 0.3;
+        Double pesoGlobal = 0.6;
         
         Integer numDias = Constantes.numDias;
         
@@ -55,18 +55,18 @@ public class AlgoritmosExperimentacionNumerica {
 
     public static void main(String[] args) {
         
-        Constantes.capacidad = 50;      //  FACTOR #1 {20 , 50}
+        Constantes.capacidad = 50;      //  FACTOR #1 {50 , 100}
                                         //  Sin limite
         
-        Integer limitePersonas = 800;   //  FACTOR #2 {300 , 800}
+        Integer limitePersonas = 800;   //  FACTOR #2 {800 , 1500}
                                         //  Maximo es 1000000 (1 millon y algo mas)
         
-        Integer numAgencias = 551;       //  FACTOR #3 {40 , 80}
+        Integer numAgencias = 300;       //  FACTOR #3 {300 , 500}
                                         //  Maximo es 551
         
         //                                  FACTOR #4 {PSO , Genetico}
         
-        Constantes.bloqueXDia = -1;      //  FACTOR #5 {5 , 10}
+        Constantes.bloqueXDia = 10;      //  FACTOR #5 {10 , 15}
                                         //  Poner -1 para que funcione con valores leidos
         
         // Data comun a los archivos. Ubicaciones geograficas del peru
@@ -93,7 +93,7 @@ public class AlgoritmosExperimentacionNumerica {
         
         
         int tamanoPoblacion = 10;
-        int numeroGeneraciones = 50;
+        int numeroGeneraciones = 70;
         
         // Despues le brindamos esta informacion a nuestros algoritmos para que nos devuelvan un Calendario de citas
         AlgoritmoGenetico AG = new AlgoritmoGenetico(bono);
@@ -111,7 +111,7 @@ public class AlgoritmosExperimentacionNumerica {
         // Imprimir metricas de algoritmo
         Printer.ReporteEstadisticas(AG, calGenetico);
         
-        System.out.print("\n\n\nFitness PSO / genético : " + x + " / " + y + "\n");
+        System.out.print("\n\n\nFitness PSO / genético : " + x.intValue() + " / " + y.intValue() + "\n");
         
         // METRICAS: CUANDO ES LA ULTIMA CITA ASIGNADA
         // LA SUMA TOTAL DE TIEMPOS DESDE EL INICIO HASTA LA CITA
