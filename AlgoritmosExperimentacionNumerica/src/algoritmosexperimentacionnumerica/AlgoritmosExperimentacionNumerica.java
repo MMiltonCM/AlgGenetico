@@ -37,12 +37,12 @@ public class AlgoritmosExperimentacionNumerica {
     public static Double ejecutarPSO(Distribuidora banco,
             Beneficio bono, Padron personas, Integer capacidad, 
             Integer numAgencias){
-        Integer numBucles = 20;
+        Integer numBucles = 100;
         Integer numParticulas = 15;
         Double aleatorizador = 1.0;
         Double inercia = 0.1;
-        Double pesoLocal = 0.3;
-        Double pesoGlobal = 0.6;
+        Double pesoLocal = 0.4;
+        Double pesoGlobal = 0.5;
         
         Integer numDias = Constantes.numDias;
         
@@ -92,7 +92,7 @@ public class AlgoritmosExperimentacionNumerica {
                 Constantes.capacidad, numAgencias);
         
         
-        int tamanoPoblacion = 10;
+        int tamanoPoblacion = 30;
         int numeroGeneraciones = 70;
         
         // Despues le brindamos esta informacion a nuestros algoritmos para que nos devuelvan un Calendario de citas
